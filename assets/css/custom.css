@@ -6,6 +6,22 @@ body {
   min-height: 100vh;
 }
 
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background: white;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.nav-toggle {
+  position: static;   /* important: no longer fixed */
+}
+
 /* Sidebar */
 .sidebar {
   position: fixed;
@@ -111,61 +127,10 @@ body {
   color: #475569;
 }
 
-/* Mobile toggle */
-/* Hamburger button (always visible) */
-.nav-toggle {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  z-index: 1001;
-
-  width: 44px;
-  height: 44px;
-
-  background: #0f172a;
-  color: #e2e8f0;
-  border: 1px solid rgba(226, 232, 240, 0.2);
-  border-radius: 12px;
-  cursor: pointer;
-
-  font-size: 20px;
-  line-height: 1;
-}
-
-
 @media (max-width: 900px) {
   body {
     display: block;
   }
-
-/* Hamburger button (always visible) */
-.nav-toggle {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  z-index: 1001;
-
-  width: 44px;
-  height: 44px;
-
-  background: #0f172a;
-  color: #e2e8f0;
-  border: 1px solid rgba(226, 232, 240, 0.2);
-  border-radius: 12px;
-  cursor: pointer;
-
-  font-size: 20px;
-  line-height: 1;
-}
-
 
   .main {
     padding-top: 64px;
