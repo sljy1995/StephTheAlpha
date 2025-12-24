@@ -122,3 +122,29 @@ body {
     padding-top: 64px;
   }
 }
+
+.sidebar-footer {
+  margin-top: auto;      /* pushes footer to bottom */
+  padding-top: 16px;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  fill: #e2e8f0;
+  opacity: 0.8;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.social-link:hover .icon {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
