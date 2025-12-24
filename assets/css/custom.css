@@ -141,15 +141,6 @@ body {
   line-height: 1;
 }
 
-  .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    transform: translateX(-110%);
-    transition: transform 0.2s ease;
-    z-index: 998;
-  }
-
   .main {
     padding-top: 64px;
   }
