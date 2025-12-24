@@ -78,6 +78,54 @@
         sidebar.classList.toggle('open');
       });
     }
+      (function () {
+    const feedEl = document.getElementById("post-feed");
+    const loadingEl = document.getElementById("feed-loading");
+    if (!feedEl) return; // only run on homepage
+
+    let posts = [];
+    let index = 0;
+    const PAGE_SIZE = 5;
+
+    function renderNext() {
+      const slice = posts.slice(index, index + PAGE_SIZE);
+      index += slice.length;
+
+      for (const p of slice) {
+        const card = document.createElement("article");
+        card.className = "post-card";
+        card.innerHTML = `
+          <h2 class="post-title"><a href="${p.url}">${p.title}</a></h2>
+          <div class="post-meta">${p.date}</div>
+          <p class="post-excerpt">${p.excerpt || ""}</p>
+        `;
+        feedEl.appendChild(card);
+      }
+
+      if (index >= posts.length) {
+        loadingEl.textContent = "You’ve reached the end.";
+        observer.disconnect();
+      } else {
+        loadingEl.textContent = "Loading…";
+      }
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) renderNext();
+    }, { rootMargin: "300px" });
+
+    fetch("/feed.json")
+      .then(r => r.json())
+      .then(data => {
+        posts = data;
+        loadingEl.textContent = "Loading…";
+        renderNext();
+        observer.observe(loadingEl);
+      })
+      .catch(() => {
+        loadingEl.textContent = "Couldn’t load posts.";
+      });
+  })();
   </script>
 
   </body>
