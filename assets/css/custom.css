@@ -1,35 +1,97 @@
+:root{
+  --sidebar-width: 260px;
+  --topbar-height: 120px; /* banner height */
+}
+
 /* Layout */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  display: flex;
   min-height: 100vh;
 }
 
+/* ===== Top banner (black + equations) ===== */
 .topbar {
   position: sticky;
   top: 0;
   z-index: 1200;
-  height: 64px;
+
+  height: var(--topbar-height);
   display: flex;
-  align-items: center;
-  padding: 0 16px;
-  background: white;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  align-items: flex-start;
+  padding: 14px 16px;
+  box-sizing: border-box;
+
+  background: #0b0b0f;
+  color: #ffffff;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+
+  /* push animation */
+  transition: margin-left 0.25s ease;
+  margin-left: 0;
 }
 
+/* equation wallpaper */
+.topbar::before{
+  content:
+    "C = S N(d_1) - K e^{-rT} N(d_2)     |     P = K e^{-rT} N(-d_2) - S N(-d_1)     |     C - P = S - K e^{-rT}\A"
+    "dS_t = \\mu S_t dt + \\sigma S_t dW_t     |     dX_t = \\mu dt + \\sigma dW_t     |     dV = V_t dt + V_S dS + \\tfrac{1}{2} V_{SS} \\sigma^2 S^2 dt\A"
+    "r_t = \\alpha + \\beta r_{t-1} + \\varepsilon_t     |     y_t = c + \\phi y_{t-1} + \\varepsilon_t     |     \\hat\\beta = (X^TX)^{-1}X^Ty\A"
+    "E[X]=\\sum_x x p(x)     |     Var(X)=E[X^2]-E[X]^2     |     \\rho = \\frac{Cov(X,Y)}{\\sigma_X\\sigma_Y}";
+  position: absolute;
+  inset: 0;
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 2.1;
+  opacity: 0.18;
+  transform: rotate(-6deg) scale(1.05);
+  padding: 18px 22px;
+  pointer-events: none;
+}
+
+/* Keep hamburger visible and clickable */
 .nav-toggle {
-  position: static;   /* important: no longer fixed */
+  position: relative;
+  z-index: 1300;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  background: rgba(15, 23, 42, 0.95);
+  color: #e2e8f0;
+  border: 1px solid rgba(226, 232, 240, 0.22);
+  border-radius: 12px;
+
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
 }
 
-/* Sidebar */
+/* Optional title in topbar if you have it */
+.banner-title{
+  position: relative;
+  margin-left: 12px;
+  margin-top: 6px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #ffffff;
+  opacity: 0.95;
+}
+
+/* ===== Sidebar ===== */
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
 
-  width: 260px;
+  width: var(--sidebar-width);
   padding: 18px;
   box-sizing: border-box;
   background: #0f172a;
@@ -47,6 +109,24 @@ body {
 .sidebar.open {
   transform: translateX(0);
 }
+
+/* ===== Push layout (content shifts) ===== */
+.main{
+  transition: margin-left 0.25s ease;
+  margin-left: 0;
+
+  padding: 24px 28px 36px 28px;
+  max-width: 980px;
+}
+
+body.nav-open .main{
+  margin-left: var(--sidebar-width);
+}
+
+body.nav-open .topbar{
+  margin-left: var(--sidebar-width);
+}
+
 /* Profile block */
 .profile-block {
   display: flex;
@@ -63,8 +143,8 @@ body {
 
 /* Bigger, centered photo */
 .profile-img {
-  width: 96px;
-  height: 96px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid rgba(226, 232, 240, 0.25);
@@ -91,7 +171,6 @@ body {
   margin-top: 12px;
 }
 
-
 /* Nav links */
 .nav a {
   display: block;
@@ -106,12 +185,7 @@ body {
   background: rgba(226, 232, 240, 0.1);
 }
 
-/* Main */
-.main{
-  padding: 36px 28px;
-  max-width: 980px;
-}
-
+/* Content typography */
 .content{
   margin-top: 18px;
   line-height: 1.6;
@@ -127,16 +201,7 @@ body {
   color: #475569;
 }
 
-@media (max-width: 900px) {
-  body {
-    display: block;
-  }
-
-  .main {
-    padding-top: 64px;
-  }
-}
-
+/* Footer */
 .sidebar-footer {
   margin-top: auto;
   padding-top: 16px;
@@ -155,4 +220,18 @@ body {
   box-shadow: 0 4px 12px rgba(10, 102, 194, 0.35);
 }
 
+/* Mobile: keep overlay (don’t push content on small screens) */
+@media (max-width: 900px) {
+  :root{
+    --topbar-height: 110px;
+  }
 
+  body.nav-open .main,
+  body.nav-open .topbar{
+    margin-left: 0;
+  }
+
+  .main{
+    padding-top: 18px;
+  }
+}
