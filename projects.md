@@ -4,8 +4,6 @@ title: Projects
 permalink: /projects/
 ---
 
-# Projects
-
 This page contains all my quantitative research and trading-related write-ups.
 
 {% for post in site.posts %}
