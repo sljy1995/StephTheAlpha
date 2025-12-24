@@ -112,12 +112,17 @@ body {
 
 /* ===== Push layout (content shifts) ===== */
 .main{
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px 48px;
   transition: margin-left 0.25s ease;
-  margin-left: 0;
-
-  padding: 24px 28px 36px 28px;
-  max-width: 980px;
 }
+
+.main-inner{
+  width: 100%;
+  max-width: 900px;
+}
+
 
 body.nav-open .main{
   margin-left: var(--sidebar-width);
