@@ -1,13 +1,11 @@
 ---
 layout: default
-title: About Me
+title: Hi, I’m Steph
 permalink: /about/
 ---
+Passionate about 3 'M's - Markets, Money, and Math. Currently a Masters in Financial Engineering Candidate at the National University of Singapore, which I enrolled just back in Aug 2025 to pursue my personal interests at a higher level. However, we all know learning can't just be about sitting in a lecture theatre or drowning in papers and books. So the goal really is to put into practice knowledge that i gain through reading and through my education. 
 
-## Hi, I’m Steph
-
-I write about **quantitative trading research**, with a focus on ideas that are **academically grounded but realistically implementable by a retail trader**. The goal really is to put into practice knowledge that i gain through reading and through my education. 
-
+Here, I intend to write about **quantitative trading research**, with a focus on ideas that are **academically grounded but realistically implementable by a retail trader**. 
 This site is a working journal where I basically document my projects on my thoughts about markets and test ideas.
 
 ---
