@@ -17,14 +17,21 @@
 
     <!-- Sidebar -->
     <aside class="sidebar">
-      <a class="profile" href="{{ '/about/' | relative_url }}">
-        <img src="{{ '/assets/img/profile.jpg' | relative_url }}" alt="Profile photo" />
-        <div class="profile-text">
-          <div class="name">Stephanie Liew</div>
-          <div class="tagline">Profile</div>
-        </div>
-      </a>
+      <!-- Profile block -->
+      <div class="profile-block">
+        <a href="{{ '/about/' | relative_url }}" class="profile-link">
+          <img
+            src="{{ '/assets/img/profile.jpg' | relative_url }}"
+            alt="Profile photo"
+            class="profile-img"
+          />
+         </a>
 
+      <div class="profile-name">Stephanie Liew</div>
+      <div class="profile-tagline">Profile</div>
+     </div>
+
+    <!-- Navigation -->
       <nav class="nav">
         <a href="{{ '/' | relative_url }}">Home</a>
         <a href="{{ '/projects/' | relative_url }}">Projects</a>
