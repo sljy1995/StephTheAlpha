@@ -10,10 +10,10 @@
   </head>
 
   <body>
-    <!-- Toggle button (mobile / optional) -->
-    <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.body.classList.toggle('nav-open')">
+    <button class="nav-toggle" aria-label="Toggle navigation">
       ☰
     </button>
+
 
     <!-- Sidebar -->
     <aside class="sidebar">
@@ -69,5 +69,14 @@
         {{ content }}
       </section>
     </main>
+    <script>
+  const toggle = document.querySelector('.nav-toggle');
+  const sidebar = document.querySelector('.sidebar');
+
+  toggle.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+  });
+</script>
+
   </body>
 </html>
