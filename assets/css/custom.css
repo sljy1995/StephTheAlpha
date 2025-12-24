@@ -124,27 +124,21 @@ body {
 }
 
 .sidebar-footer {
-  margin-top: auto;      /* pushes footer to bottom */
+  margin-top: auto;
   padding-top: 16px;
 }
 
-.social-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
+.linkedin-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border-radius: 50%;
 }
 
-.icon {
-  width: 22px;
-  height: 22px;
-  fill: #e2e8f0;
-  opacity: 0.8;
-  transition: opacity 0.15s ease, transform 0.15s ease;
-}
-
-.social-link:hover .icon {
-  opacity: 1;
+.social-link:hover .linkedin-icon {
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.35);
 }
+
 
