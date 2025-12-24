@@ -30,6 +30,53 @@ body {
   /* push animation */
   transition: margin-left 0.25s ease;
   margin-left: 0;
+  }
+
+/* ===== Top banner (black + equations) ===== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+
+  height: var(--topbar-height);
+  display: flex;
+  align-items: flex-start;
+  padding: 14px 16px;
+  box-sizing: border-box;
+
+  background: #0b0b0f;
+  color: #ffffff;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+
+  /* push animation */
+  transition: margin-left 0.25s ease;
+  margin-left: 0;
+
+  .banner-content{
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  text-align: center;
+  max-width: 900px;
+  padding-top: 28px;
+}
+
+.banner-title{
+  margin: 0 0 10px 0;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+}
+
+.banner-subtitle{
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(226,232,240,0.85);
+}
+
 }
 
 /* equation wallpaper */
