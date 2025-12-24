@@ -287,11 +287,17 @@ body.nav-open .topbar{
     padding-top: 18px;
   }
 }
-/* Post feed layout */
-#post-feed{
-  display: grid;
-  gap: 16px;
-  margin-top: 18px;
+/* Center the homepage content column */
+.content {
+  max-width: 900px;
+  margin: 0 auto;          /* centers the whole block */
+  width: 100%;
+}
+
+/* Ensure the post feed fills the centered column */
+#post-feed {
+  width: 100%;
+  margin: 18px auto 0;
 }
 
 /* Card */
