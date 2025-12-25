@@ -1,11 +1,14 @@
 /* =========================
-   FIXED + CLEAN PUSH DRAWER
+   CLEANED + FIXED (DROP-IN REPLACEMENT)
+   - removes raw TeX text bleed by killing .topbar::before
+   - removes conflicting sidebar rules (you had TWO sidebar systems)
+   - keeps desktop correct + mobile correct
    ========================= */
 
-/* 1) Variables (use ONE width var everywhere) */
+/* 1) Variables */
 :root{
   --sidebar-width: 260px;
-  --topbar-height: 120px; /* banner height */
+  --topbar-height: 120px;
 }
 
 /* Layout */
@@ -15,8 +18,7 @@ body{
   min-height: 100vh;
 }
 
-/* 2) REMOVE duplicate .topbar blocks + nested CSS (that nested stuff breaks plain CSS)
-      Replace BOTH of your .topbar definitions with THIS single one. */
+/* ===== Top banner ===== */
 .topbar{
   position: sticky;
   top: 0;
@@ -33,15 +35,19 @@ body{
   overflow: hidden;
   border-bottom: 1px solid rgba(255,255,255,0.10);
 
-  /* push animation */
   transition: margin-left 0.25s ease;
   margin-left: 0;
 }
 
-/* Banner content (your nested CSS moved out properly) */
+/* IMPORTANT: kill any old CSS wallpaper that prints raw LaTeX as normal text */
+.topbar::before{
+  content: none !important;
+}
+
+/* Banner content */
 .banner-content{
   position: relative;
-  z-index: 1;
+  z-index: 2;               /* above eq-wallpaper */
   margin: 0 auto;
   text-align: center;
   max-width: 900px;
@@ -63,10 +69,10 @@ body{
   color: rgba(226,232,240,0.85);
 }
 
-/* Make header title behave like a logo button, not a link */
+/* Logo link should NOT look like a hyperlink */
 .banner-home-link{
-  color: #ffffff;              /* force white */
-  text-decoration: none;       /* remove underline */
+  color: #ffffff;
+  text-decoration: none;
   font-weight: inherit;
   letter-spacing: inherit;
 
@@ -74,35 +80,27 @@ body{
   padding: 4px 8px;
   border-radius: 8px;
 
-  transition: 
+  transition:
     background-color 0.15s ease,
     transform 0.12s ease,
     opacity 0.12s ease;
 }
-
-/* Hover = subtle button feel */
 .banner-home-link:hover{
   background: rgba(255,255,255,0.08);
   opacity: 0.95;
   transform: translateY(-1px);
 }
-
-/* Click (tap) feedback */
 .banner-home-link:active{
   transform: translateY(0);
   background: rgba(255,255,255,0.12);
 }
+.banner-home-link:visited{ color: #ffffff; }
 
-/* Kill visited-link purple forever */
-.banner-home-link:visited{
-  color: #ffffff;
-}
-
-/* equation wallpaper */
+/* MathJax wallpaper layer (real rendered math) */
 .eq-wallpaper{
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;               /* below title, above background */
   opacity: 0.18;
   transform: rotate(-6deg) scale(1.05);
   pointer-events: none;
@@ -113,18 +111,18 @@ body{
   padding: 18px 22px;
   align-content: flex-start;
 }
-
 .eq-wallpaper span{
   display: inline-flex;
   white-space: nowrap;
-  font-size: 16px; /* MathJax will size nicely */
+  font-size: 16px;
 }
-/* Keep hamburger visible and clickable */
+
+/* Hamburger */
 .nav-toggle{
   position: relative;
-  z-index: 1300;
-
+  z-index: 7000;
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
 
@@ -141,36 +139,31 @@ body{
   cursor: pointer;
 }
 
-/* IMPORTANT: You had another .banner-title below that repositions it.
-   Delete it (or keep only if you really want that layout). */
- /* .banner-title{
-    position: relative;
-    margin-left: 12px;
-    margin-top: 6px;
-    font-weight: 700;
-    letter-spacing: 0.4px;
-    color: #ffffff;
-    opacity: 0.95;
- } */
-
-
-/* 3) Sidebar: FIX var name (you used --drawer-w but defined --sidebar-width) */
+/* ===== Sidebar (single source of truth) ===== */
 .sidebar{
+  background: #0b1b2a;
+  color: #e2e8f0;
+  padding: 18px 16px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
   position: fixed;
   top: 0;
   left: 0;
   width: var(--sidebar-width);
-  height: 100dvh;
 
   transform: translateX(-100%);
   transition: transform .25s ease;
-  z-index: 2000;
-
-  /* keep your own sidebar background/padding if you have it elsewhere */
-  /* background: #0b1b2a; */
 }
 
-/* 4) Backdrop */
+/* Open state driven ONLY by body.nav-open */
+body.nav-open .sidebar{
+  transform: translateX(0);
+}
+
+/* Backdrop (mobile only will show; desktop hidden in media query) */
 .drawer-backdrop{
   position: fixed;
   inset: 0;
@@ -178,40 +171,29 @@ body{
   opacity: 0;
   pointer-events: none;
   transition: opacity .25s ease;
-  z-index: 1900;
+  z-index: 5500;
 }
 body.nav-open .drawer-backdrop{
   opacity: 1;
   pointer-events: auto;
 }
 
-/* 5) Push layout (content shifts) */
+/* Main content push (desktop only will push; mobile will override) */
 .main{
   display: flex;
   justify-content: center;
   padding: 32px 16px 48px;
   transition: margin-left 0.25s ease;
 }
-
 .main-inner{
   width: 100%;
   max-width: 900px;
 }
 
-body.nav-open .main{
-  margin-left: var(--sidebar-width);
-}
+/* Optional: prevent horizontal scroll */
+body.nav-open{ overflow-x: hidden; }
 
-body.nav-open .topbar{
-  margin-left: var(--sidebar-width);
-}
-
-/* Optional: prevent horizontal scrolling during push */
-body.nav-open{
-  overflow-x: hidden;
-}
-
-/* 6) Profile block */
+/* Profile */
 .profile-block{
   display: flex;
   flex-direction: column;
@@ -219,12 +201,10 @@ body.nav-open{
   text-align: center;
   margin-bottom: 24px;
 }
-
 .profile-link{
   display: inline-block;
   text-decoration: none;
 }
-
 .profile-img{
   width: 110px;
   height: 110px;
@@ -233,23 +213,18 @@ body.nav-open{
   border: 2px solid rgba(226, 232, 240, 0.25);
   margin-bottom: 10px;
 }
-
 .profile-name{
   font-weight: 700;
   font-size: 16px;
   color: #e2e8f0;
   line-height: 1.2;
 }
-
 .profile-tagline{
   font-size: 13px;
   color: #94a3b8;
   margin-top: 2px;
 }
-
-/* Nav spacing after profile */
 .nav{ margin-top: 12px; }
-
 .nav a{
   display: block;
   padding: 10px 10px;
@@ -258,10 +233,28 @@ body.nav-open{
   color: #e2e8f0;
   font-weight: 600;
 }
-
 .nav a:hover{ background: rgba(226, 232, 240, 0.1); }
 
-/* Content typography */
+/* Sidebar footer pinned bottom */
+.sidebar-footer{
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  justify-content: flex-start;
+}
+.linkedin-icon{
+  width: 28px;
+  height: 28px;
+  display: block;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border-radius: 50%;
+}
+.sidebar-footer a:hover .linkedin-icon{
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.35);
+}
+
+/* Content */
 .content{
   margin-top: 18px;
   line-height: 1.6;
@@ -272,40 +265,9 @@ body.nav-open{
   width: 100%;
 }
 
-/* Hero */
-.hero h1{
-  font-size: 44px;
-  margin: 0 0 10px 0;
-}
+/* Cards / feed (kept from your original) */
+#post-feed{ width: 100%; margin: 18px auto 0; }
 
-.hero .subtitle{ color: #475569; }
-
-/* Footer */
-.sidebar-footer{
-  margin-top: auto;
-  padding-top: 16px;
-}
-
-.linkedin-icon{
-  width: 28px;
-  height: 28px;
-  display: block;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  border-radius: 50%;
-}
-
-.social-link:hover .linkedin-icon{
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.35);
-}
-
-/* Feed layout */
-#post-feed{
-  width: 100%;
-  margin: 18px auto 0;
-}
-
-/* Card */
 .post-card{
   border: 1px solid rgba(15, 23, 42, 0.10);
   border-radius: 16px;
@@ -314,167 +276,108 @@ body.nav-open{
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
-
 .post-card:hover{
   transform: translateY(-2px);
   box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10);
   border-color: rgba(15, 23, 42, 0.18);
 }
-
 .post-card-link{
   display: block;
   padding: 18px 18px 16px 18px;
   text-decoration: none;
   color: inherit;
 }
-
 .post-card-header{
   display: flex;
   flex-direction: column;
   gap: 6px;
   margin-bottom: 10px;
 }
-
 .post-title{
   margin: 0;
   font-size: 20px;
   line-height: 1.25;
   color: #0f172a;
 }
-
-.post-meta{
-  font-size: 12px;
-  color: #64748b;
-}
-
-.post-excerpt{
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #334155;
-}
-
-#feed-loading{
-  margin-top: 14px;
-  color: #64748b;
-}
+.post-meta{ font-size: 12px; color: #64748b; }
+.post-excerpt{ margin: 0; font-size: 14px; line-height: 1.6; color: #334155; }
+#feed-loading{ margin-top: 14px; color: #64748b; }
 
 /* =========================
-   NAV HOTFIX (REPLACE THIS ENTIRE BLOCK)
+   RESPONSIVE BEHAVIOR
    ========================= */
 
-/* Sidebar base */
-.sidebar{
-  background: #0b1b2a;
-  color: #e2e8f0;
-  padding: 18px 16px;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-}
-
-/* Footer pinned bottom */
-.sidebar-footer{
-  margin-top: auto;
-  padding-top: 16px;
-  display: flex;
-  justify-content: flex-start;
-}
-
-/* Hover for LinkedIn (your HTML doesn't use .social-link) */
-.sidebar-footer a:hover .linkedin-icon{
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.35);
-}
-
-/* Hamburger always clickable */
-.nav-toggle{
-  display: inline-flex;
-  position: relative;
-  z-index: 7000;
-}
-
-/* -------------------------
-   DESKTOP (>= 901px): PUSH + TOGGLE
-   ------------------------- */
+/* DESKTOP (>=901px): PUSH drawer + content shifts */
 @media (min-width: 901px){
-  /* Sidebar becomes a push drawer on desktop */
   .sidebar{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: var(--sidebar-width);
     height: 100vh;
     z-index: 1100;
-
-    /* DEFAULT CLOSED on desktop */
-    transform: translateX(-100%);
-    transition: transform .25s ease;
   }
 
-  /* Open when nav-open */
-  body.nav-open .sidebar{
-    transform: translateX(0);
-  }
-
-  /* No backdrop on desktop */
+  /* Desktop: no backdrop */
   .drawer-backdrop{ display: none !important; }
 
-  /* Content pushes ONLY when nav-open */
-  .topbar, .main{
-    margin-left: 0;
-    transition: margin-left 0.25s ease;
-  }
-
+  /* Only push when nav is open */
   body.nav-open .topbar,
   body.nav-open .main{
     margin-left: var(--sidebar-width);
   }
+
+  body:not(.nav-open) .topbar,
+  body:not(.nav-open) .main{
+    margin-left: 0;
+  }
 }
 
-/* -------------------------
-   MOBILE (<= 900px): OVERLAY + TOGGLE
-   ------------------------- */
+/* MOBILE (<=900px): OVERLAY drawer + NO push */
 @media (max-width: 900px){
-  :root{ --sidebar-width: min(82vw, 320px); }
+  :root{
+    --sidebar-width: min(82vw, 320px);
+    --topbar-height: 110px;
+  }
 
   .sidebar{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: var(--sidebar-width);
     height: 100dvh;
-
-    transform: translateX(-100%);
-    transition: transform .25s ease;
     z-index: 6000;
-  }
-
-  body.nav-open .sidebar{
-    transform: translateX(0);
-  }
-
-  /* Backdrop ON for mobile */
-  .drawer-backdrop{
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.45);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .25s ease;
-    z-index: 5500;
-  }
-  body.nav-open .drawer-backdrop{
-    opacity: 1;
-    pointer-events: auto;
   }
 
   /* No push on mobile */
   .topbar, .main{
     margin-left: 0 !important;
   }
+
+  /* Mobile topbar layout polish (optional, keeps title centered) */
+  .topbar{
+    display: grid;
+    grid-template-columns: 48px 1fr 48px;
+    align-items: center;
+    padding: 12px 12px;
+  }
+  .nav-toggle{
+    grid-column: 1;
+    justify-self: start;
+  }
+  .banner-content{
+    grid-column: 2;
+    justify-self: center;
+    padding-top: 0;
+    margin: 0;
+    max-width: none;
+  }
+  .banner-title{
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.1;
+  }
+
+  /* Make equations quieter on mobile */
+  .eq-wallpaper{
+    opacity: 0.10;
+    transform: rotate(-6deg) scale(0.95);
+    padding: 12px 14px;
+    gap: 14px;
+  }
+  .eq-wallpaper span{
+    font-size: 13px;
+  }
 }
-
-
