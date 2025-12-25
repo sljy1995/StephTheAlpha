@@ -63,25 +63,62 @@ body{
   color: rgba(226,232,240,0.85);
 }
 
-/* equation wallpaper */
-.topbar::before{
-  content:
-    "C = S N(d_1) - K e^{-rT} N(d_2)     |     P = K e^{-rT} N(-d_2) - S N(-d_1)     |     C - P = S - K e^{-rT}\A"
-    "dS_t = \\mu S_t dt + \\sigma S_t dW_t     |     dX_t = \\mu dt + \\sigma dW_t     |     dV = V_t dt + V_S dS + \\tfrac{1}{2} V_{SS} \\sigma^2 S^2 dt\A"
-    "r_t = \\alpha + \\beta r_{t-1} + \\varepsilon_t     |     y_t = c + \\phi y_{t-1} + \\varepsilon_t     |     \\hat\\beta = (X^TX)^{-1}X^Ty\A"
-    "E[X]=\\sum_x x p(x)     |     Var(X)=E[X^2]-E[X]^2     |     \\rho = \\frac{Cov(X,Y)}{\\sigma_X\\sigma_Y}";
-  position: absolute;
-  inset: 0;
-  white-space: pre-wrap;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 14px;
-  line-height: 2.1;
-  opacity: 0.18;
-  transform: rotate(-6deg) scale(1.05);
-  padding: 18px 22px;
-  pointer-events: none;
+/* Make header title behave like a logo button, not a link */
+.banner-home-link{
+  color: #ffffff;              /* force white */
+  text-decoration: none;       /* remove underline */
+  font-weight: inherit;
+  letter-spacing: inherit;
+
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 8px;
+
+  transition: 
+    background-color 0.15s ease,
+    transform 0.12s ease,
+    opacity 0.12s ease;
 }
 
+/* Hover = subtle button feel */
+.banner-home-link:hover{
+  background: rgba(255,255,255,0.08);
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+/* Click (tap) feedback */
+.banner-home-link:active{
+  transform: translateY(0);
+  background: rgba(255,255,255,0.12);
+}
+
+/* Kill visited-link purple forever */
+.banner-home-link:visited{
+  color: #ffffff;
+}
+
+/* equation wallpaper */
+.eq-wallpaper{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.18;
+  transform: rotate(-6deg) scale(1.05);
+  pointer-events: none;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  padding: 18px 22px;
+  align-content: flex-start;
+}
+
+.eq-wallpaper span{
+  display: inline-flex;
+  white-space: nowrap;
+  font-size: 16px; /* MathJax will size nicely */
+}
 /* Keep hamburger visible and clickable */
 .nav-toggle{
   position: relative;
