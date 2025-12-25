@@ -300,6 +300,14 @@ body.nav-open{ overflow-x: hidden; }
   line-height: 1.25;
   color: #0f172a;
 }
+
+.post-summary {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #4b5563;   /* muted gray */
+}
+
 .post-meta{ font-size: 12px; color: #64748b; }
 .post-excerpt{ margin: 0; font-size: 14px; line-height: 1.6; color: #334155; }
 #feed-loading{ margin-top: 14px; color: #64748b; }
