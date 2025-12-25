@@ -323,62 +323,103 @@ body.nav-open{
   color: #64748b;
 }
 
-/* ---------- DESKTOP: sidebar always visible ---------- */
+/* =========================
+   NAV HOTFIX (paste last)
+   ========================= */
+
+/* Ensure sidebar layout is stable */
+.sidebar{
+  background: #0b1b2a;              /* FIX: not white */
+  color: #e2e8f0;
+  padding: 18px 16px;
+  box-sizing: border-box;
+
+  display: flex;                     /* FIX: so footer can stick to bottom */
+  flex-direction: column;
+}
+
+/* Footer stays at bottom-left */
+.sidebar-footer{
+  margin-top: auto;                  /* works ONLY because sidebar is flex-column */
+  padding-top: 16px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Your linkedin hover selector targets .social-link but your HTML doesn't have it */
+.sidebar-footer a:hover .linkedin-icon{
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.35);
+}
+
+/* Hamburger should be visible and clickable */
+.nav-toggle{
+  display: inline-flex !important;   /* FIX: force it back */
+  position: relative;
+  z-index: 5000;                     /* above banner wallpaper */
+}
+
+/* ---------- DESKTOP: sidebar always visible, no backdrop ---------- */
 @media (min-width: 901px){
   .sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
     transform: none !important;
+    z-index: 1100;
   }
-  .drawer-backdrop{ display:none !important; }
+
+  .drawer-backdrop{ display: none !important; }
 
   .topbar, .main{
     margin-left: var(--sidebar-width);
   }
 
-  .nav-toggle{ display:none; }
+  /* Optional: hide hamburger on desktop (enable if you want) */
+  /* .nav-toggle{ display:none !important; } */
 }
 
-/* ---------- MOBILE: overlay drawer (no push) ---------- */
+/* ---------- MOBILE: drawer overlay (toggle in/out) ---------- */
 @media (max-width: 900px){
-  :root{
-    --sidebar-width: min(82vw, 320px);
-  }
+  :root{ --sidebar-width: min(82vw, 320px); }
 
-  .nav-toggle{ display:inline-flex; }
-
-  /* drawer slides in over content */
+  /* Drawer behavior */
   .sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
     width: var(--sidebar-width);
     height: 100dvh;
     transform: translateX(-100%) !important;
-    background: #0b1b2a;            /* ensures it’s not grey/transparent */
-    z-index: 3000;                  /* above everything */
+    transition: transform .25s ease;
+    z-index: 6000;                   /* above topbar */
   }
-  .sidebar.open{
+  body.nav-open .sidebar{
     transform: translateX(0) !important;
   }
 
-  /* dim the page behind */
+  /* Backdrop */
   .drawer-backdrop{
-    display:block;
+    display: block;
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,.45);
     opacity: 0;
     pointer-events: none;
     transition: opacity .25s ease;
-    z-index: 2500;
+    z-index: 5500;
   }
   body.nav-open .drawer-backdrop{
     opacity: 1;
     pointer-events: auto;
   }
 
-  /* IMPORTANT: no push on mobile */
-  body.nav-open .main,
-  body.nav-open .topbar{
+  /* Don't push content on mobile */
+  body.nav-open .topbar,
+  body.nav-open .main{
     margin-left: 0 !important;
   }
-
-  /* keep topbar under the drawer when open */
-  .topbar{ z-index: 1200; }
 }
+
