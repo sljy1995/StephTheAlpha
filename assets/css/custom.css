@@ -1,17 +1,23 @@
+/* =========================
+   FIXED + CLEAN PUSH DRAWER
+   ========================= */
+
+/* 1) Variables (use ONE width var everywhere) */
 :root{
   --sidebar-width: 260px;
   --topbar-height: 120px; /* banner height */
 }
 
 /* Layout */
-body {
+body{
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   min-height: 100vh;
 }
 
-/* ===== Top banner (black + equations) ===== */
-.topbar {
+/* 2) REMOVE duplicate .topbar blocks + nested CSS (that nested stuff breaks plain CSS)
+      Replace BOTH of your .topbar definitions with THIS single one. */
+.topbar{
   position: sticky;
   top: 0;
   z-index: 1200;
@@ -30,30 +36,10 @@ body {
   /* push animation */
   transition: margin-left 0.25s ease;
   margin-left: 0;
-  }
+}
 
-/* ===== Top banner (black + equations) ===== */
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 1200;
-
-  height: var(--topbar-height);
-  display: flex;
-  align-items: flex-start;
-  padding: 14px 16px;
-  box-sizing: border-box;
-
-  background: #0b0b0f;
-  color: #ffffff;
-  overflow: hidden;
-  border-bottom: 1px solid rgba(255,255,255,0.10);
-
-  /* push animation */
-  transition: margin-left 0.25s ease;
-  margin-left: 0;
-
-  .banner-content{
+/* Banner content (your nested CSS moved out properly) */
+.banner-content{
   position: relative;
   z-index: 1;
   margin: 0 auto;
@@ -77,8 +63,6 @@ body {
   color: rgba(226,232,240,0.85);
 }
 
-}
-
 /* equation wallpaper */
 .topbar::before{
   content:
@@ -99,7 +83,7 @@ body {
 }
 
 /* Keep hamburger visible and clickable */
-.nav-toggle {
+.nav-toggle{
   position: relative;
   z-index: 1300;
 
@@ -120,44 +104,52 @@ body {
   cursor: pointer;
 }
 
-/* Optional title in topbar if you have it */
-.banner-title{
-  position: relative;
-  margin-left: 12px;
-  margin-top: 6px;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-  color: #ffffff;
-  opacity: 0.95;
-}
+/* IMPORTANT: You had another .banner-title below that repositions it.
+   Delete it (or keep only if you really want that layout). */
+ /* .banner-title{
+    position: relative;
+    margin-left: 12px;
+    margin-top: 6px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: #ffffff;
+    opacity: 0.95;
+ } */
 
-/* ===== Sidebar ===== */
-.sidebar {
+
+/* 3) Sidebar: FIX var name (you used --drawer-w but defined --sidebar-width) */
+.sidebar{
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
-
   width: var(--sidebar-width);
-  padding: 18px;
-  box-sizing: border-box;
-  background: #0f172a;
-  color: #e2e8f0;
+  height: 100dvh;
 
-  display: flex;
-  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform .25s ease;
+  z-index: 2000;
 
-  transform: translateX(-110%);
-  transition: transform 0.25s ease;
-  z-index: 1000;
+  /* keep your own sidebar background/padding if you have it elsewhere */
+  /* background: #0b1b2a; */
+}
+.sidebar.open{ transform: translateX(0); }
+
+/* 4) Backdrop: you created it but never turn it on. This fixes “white page” click-through */
+.drawer-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: 1900;
+}
+body.nav-open .drawer-backdrop{
+  opacity: 1;
+  pointer-events: auto;
 }
 
-/* Sidebar visible when toggled */
-.sidebar.open {
-  transform: translateX(0);
-}
-
-/* ===== Push layout (content shifts) ===== */
+/* 5) Push layout (content shifts) */
 .main{
   display: flex;
   justify-content: center;
@@ -170,7 +162,6 @@ body {
   max-width: 900px;
 }
 
-
 body.nav-open .main{
   margin-left: var(--sidebar-width);
 }
@@ -179,8 +170,13 @@ body.nav-open .topbar{
   margin-left: var(--sidebar-width);
 }
 
-/* Profile block */
-.profile-block {
+/* Optional: prevent horizontal scrolling during push */
+body.nav-open{
+  overflow-x: hidden;
+}
+
+/* 6) Profile block */
+.profile-block{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -188,13 +184,12 @@ body.nav-open .topbar{
   margin-bottom: 24px;
 }
 
-.profile-link {
+.profile-link{
   display: inline-block;
   text-decoration: none;
 }
 
-/* Bigger, centered photo */
-.profile-img {
+.profile-img{
   width: 110px;
   height: 110px;
   border-radius: 50%;
@@ -203,28 +198,23 @@ body.nav-open .topbar{
   margin-bottom: 10px;
 }
 
-/* Name */
-.profile-name {
+.profile-name{
   font-weight: 700;
   font-size: 16px;
   color: #e2e8f0;
   line-height: 1.2;
 }
 
-/* Subtitle */
-.profile-tagline {
+.profile-tagline{
   font-size: 13px;
   color: #94a3b8;
   margin-top: 2px;
 }
 
 /* Nav spacing after profile */
-.nav {
-  margin-top: 12px;
-}
+.nav{ margin-top: 12px; }
 
-/* Nav links */
-.nav a {
+.nav a{
   display: block;
   padding: 10px 10px;
   border-radius: 10px;
@@ -233,33 +223,34 @@ body.nav-open .topbar{
   font-weight: 600;
 }
 
-.nav a:hover {
-  background: rgba(226, 232, 240, 0.1);
-}
+.nav a:hover{ background: rgba(226, 232, 240, 0.1); }
 
 /* Content typography */
 .content{
   margin-top: 18px;
   line-height: 1.6;
   color: #0f172a;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
+/* Hero */
 .hero h1{
   font-size: 44px;
   margin: 0 0 10px 0;
 }
 
-.hero .subtitle{
-  color: #475569;
-}
+.hero .subtitle{ color: #475569; }
 
 /* Footer */
-.sidebar-footer {
+.sidebar-footer{
   margin-top: auto;
   padding-top: 16px;
 }
 
-.linkedin-icon {
+.linkedin-icon{
   width: 28px;
   height: 28px;
   display: block;
@@ -267,35 +258,13 @@ body.nav-open .topbar{
   border-radius: 50%;
 }
 
-.social-link:hover .linkedin-icon {
+.social-link:hover .linkedin-icon{
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(10, 102, 194, 0.35);
 }
 
-/* Mobile: keep overlay (don’t push content on small screens) */
-@media (max-width: 900px) {
-  :root{
-    --topbar-height: 110px;
-  }
-
-  body.nav-open .main,
-  body.nav-open .topbar{
-    margin-left: 0;
-  }
-
-  .main{
-    padding-top: 18px;
-  }
-}
-/* Center the homepage content column */
-.content {
-  max-width: 900px;
-  margin: 0 auto;          /* centers the whole block */
-  width: 100%;
-}
-
-/* Ensure the post feed fills the centered column */
-#post-feed {
+/* Feed layout */
+#post-feed{
   width: 100%;
   margin: 18px auto 0;
 }
@@ -316,7 +285,6 @@ body.nav-open .topbar{
   border-color: rgba(15, 23, 42, 0.18);
 }
 
-/* Make whole card clickable */
 .post-card-link{
   display: block;
   padding: 18px 18px 16px 18px;
@@ -324,7 +292,6 @@ body.nav-open .topbar{
   color: inherit;
 }
 
-/* Title + meta */
 .post-card-header{
   display: flex;
   flex-direction: column;
@@ -344,7 +311,6 @@ body.nav-open .topbar{
   color: #64748b;
 }
 
-/* Excerpt */
 .post-excerpt{
   margin: 0;
   font-size: 14px;
@@ -352,9 +318,23 @@ body.nav-open .topbar{
   color: #334155;
 }
 
-/* Loading text spacing */
 #feed-loading{
   margin-top: 14px;
   color: #64748b;
 }
 
+/* 7) Mobile: you currently DISABLE push on small screens.
+      If you want push on mobile too, REMOVE the margin-left reset.
+      If you want overlay on mobile, KEEP it. I’ll set it to PUSH (based on what you asked). */
+@media (max-width: 900px){
+  :root{ --topbar-height: 110px; }
+
+  /* PUSH ON MOBILE: keep these enabled */
+  body.nav-open .main{ margin-left: var(--sidebar-width); }
+  body.nav-open .topbar{ margin-left: var(--sidebar-width); }
+
+  /* Optional: if sidebar width is too big on phones, make it smaller */
+  :root{ --sidebar-width: min(82vw, 320px); }
+
+  .main{ padding-top: 18px; }
+}
