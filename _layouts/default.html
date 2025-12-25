@@ -75,38 +75,27 @@
 
     <script>
       const toggle = document.querySelector('.nav-toggle');
-      const sidebar = document.querySelector('.sidebar');
-      const shell = document.querySelector('.app-shell');
       const backdrop = document.querySelector('.drawer-backdrop');
 
-      function setNav(open) {
+      function closeNav() {
+        document.body.classList.remove('nav-open');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      }
+    
+      function toggleNav() {
+        const open = !document.body.classList.contains('nav-open');
         document.body.classList.toggle('nav-open', open);
-        sidebar && sidebar.classList.toggle('open', open);
-        shell && shell.classList.toggle('pushed', open);
-
         if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-
-        // Lock background scroll on mobile
-        document.body.style.overflow = open ? 'hidden' : '';
-        document.body.style.touchAction = open ? 'none' : '';
       }
 
-      if (toggle) {
-        toggle.addEventListener('click', () => {
-          const open = !document.body.classList.contains('nav-open');
-          setNav(open);
-        });
-      }
+      if (toggle) toggle.addEventListener('click', toggleNav);
+      if (backdrop) backdrop.addEventListener('click', closeNav);
 
-      if (backdrop) {
-        backdrop.addEventListener('click', () => setNav(false));
-      }
-
-      // Close on ESC
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') setNav(false);
+        if (e.key === 'Escape') closeNav();
       });
     </script>
+
 
     <script>
       (function () {
