@@ -2,7 +2,7 @@
 layout: default
 title: "Monetising Volatility Risk Premium for AAPL"
 date: 2025-12-25
-summary: "We examine the persistence of AAPL’s volatility risk premium and show how it can be converted into a systematic put-selling signal for retail traders."
+excerpt: "We examine the persistence of AAPL’s volatility risk premium and show how it can be converted into a systematic put-selling signal for retail traders."
 ---
 # Monetising Volatility Risk Premium for AAPL 
 
