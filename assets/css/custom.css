@@ -323,18 +323,62 @@ body.nav-open{
   color: #64748b;
 }
 
-/* 7) Mobile: you currently DISABLE push on small screens.
-      If you want push on mobile too, REMOVE the margin-left reset.
-      If you want overlay on mobile, KEEP it. I’ll set it to PUSH (based on what you asked). */
+/* ---------- DESKTOP: sidebar always visible ---------- */
+@media (min-width: 901px){
+  .sidebar{
+    transform: none !important;
+  }
+  .drawer-backdrop{ display:none !important; }
+
+  .topbar, .main{
+    margin-left: var(--sidebar-width);
+  }
+
+  .nav-toggle{ display:none; }
+}
+
+/* ---------- MOBILE: overlay drawer (no push) ---------- */
 @media (max-width: 900px){
-  :root{ --topbar-height: 110px; }
+  :root{
+    --sidebar-width: min(82vw, 320px);
+  }
 
-  /* PUSH ON MOBILE: keep these enabled */
-  body.nav-open .main{ margin-left: var(--sidebar-width); }
-  body.nav-open .topbar{ margin-left: var(--sidebar-width); }
+  .nav-toggle{ display:inline-flex; }
 
-  /* Optional: if sidebar width is too big on phones, make it smaller */
-  :root{ --sidebar-width: min(82vw, 320px); }
+  /* drawer slides in over content */
+  .sidebar{
+    width: var(--sidebar-width);
+    height: 100dvh;
+    transform: translateX(-100%) !important;
+    background: #0b1b2a;            /* ensures it’s not grey/transparent */
+    z-index: 3000;                  /* above everything */
+  }
+  .sidebar.open{
+    transform: translateX(0) !important;
+  }
 
-  .main{ padding-top: 18px; }
+  /* dim the page behind */
+  .drawer-backdrop{
+    display:block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+    z-index: 2500;
+  }
+  body.nav-open .drawer-backdrop{
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* IMPORTANT: no push on mobile */
+  body.nav-open .main,
+  body.nav-open .topbar{
+    margin-left: 0 !important;
+  }
+
+  /* keep topbar under the drawer when open */
+  .topbar{ z-index: 1200; }
 }
