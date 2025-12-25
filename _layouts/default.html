@@ -10,16 +10,8 @@
   </head>
 
   <body>
-    <header class="topbar">
-      <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
-
-      <div class="banner-content">
-        <h1 class="banner-title">AlphaSteph</h1>
-      </div>
-    </header>
-
-    <!-- Sidebar -->
-    <aside class="sidebar">
+    <!-- Sidebar (stays fixed; content gets pushed) -->
+    <aside class="sidebar" aria-label="Site navigation">
       <!-- Profile block -->
       <div class="profile-block">
         <a href="{{ '/about/' | relative_url }}" class="profile-link">
@@ -28,110 +20,148 @@
             alt="Profile photo"
             class="profile-img"
           />
-         </a>
+        </a>
 
-      <div class="profile-name">Stephanie Liew</div>
-      <div class="profile-tagline">Profile</div>
-     </div>
+        <div class="profile-name">Stephanie Liew</div>
+        <div class="profile-tagline">Profile</div>
+      </div>
 
-    <!-- Navigation -->
+      <!-- Navigation -->
       <nav class="nav">
         <a href="{{ '/' | relative_url }}">Home</a>
         <a href="{{ '/projects/' | relative_url }}">Projects</a>
       </nav>
 
       <div class="sidebar-footer">
-        <a href="https://www.linkedin.com/in/stephliewjy/"
-           target="_blank"
-           rel="noopener"
-            aria-label="LinkedIn">
-           <svg class="linkedin-icon"
-             viewBox="0 0 72 72"
-             aria-hidden="true">
-            <!-- Official LinkedIn blue -->
-              <circle cx="36" cy="36" r="36" fill="#0A66C2"/>
-
-            <!-- Official LinkedIn glyph -->
-              <path fill="#ffffff" d="M20 27h8v25h-8V27zm4-12c-2.6 0-4.7 2.1-4.7 4.7 0 2.6 2.1 4.7 4.7 4.7 2.6 0 4.7-2.1 4.7-4.7 0-2.6-2.1-4.7-4.7-4.7zM34 27h7.7v3.4h.1c1.1-2.1 3.8-4.3 7.8-4.3 8.3 0 9.8 5.4 9.8 12.4V52h-8V39.4c0-3 0-6.8-4.2-6.8-4.2 0-4.9 3.3-4.9 6.6V52h-8V27z"/>
-            </svg>
+        <a
+          href="https://www.linkedin.com/in/stephliewjy/"
+          target="_blank"
+          rel="noopener"
+          aria-label="LinkedIn"
+        >
+          <svg class="linkedin-icon" viewBox="0 0 72 72" aria-hidden="true">
+            <circle cx="36" cy="36" r="36" fill="#0A66C2" />
+            <path
+              fill="#ffffff"
+              d="M20 27h8v25h-8V27zm4-12c-2.6 0-4.7 2.1-4.7 4.7 0 2.6 2.1 4.7 4.7 4.7 2.6 0 4.7-2.1 4.7-4.7 0-2.6-2.1-4.7-4.7-4.7zM34 27h7.7v3.4h.1c1.1-2.1 3.8-4.3 7.8-4.3 8.3 0 9.8 5.4 9.8 12.4V52h-8V39.4c0-3 0-6.8-4.2-6.8-4.2 0-4.9 3.3-4.9 6.6V52h-8V27z"
+            />
+          </svg>
         </a>
       </div>
-      
     </aside>
 
-    <!-- Main content -->
-    <main class="main">
-      <div class="main-inner">
-        <section class="content">
-          {{ content }}
-        </section>
-      </div>
-    </main>
+    <!-- Optional: dimmed backdrop (click to close) -->
+    <div class="drawer-backdrop" aria-hidden="true"></div>
 
-  <script>
-    const toggle = document.querySelector('.nav-toggle');
-    const sidebar = document.querySelector('.sidebar');
+    <!-- Everything inside here will shift right when nav opens -->
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
 
-    if (toggle && sidebar) {
-      toggle.addEventListener('click', () => {
-        document.body.classList.toggle('nav-open');
-        sidebar.classList.toggle('open');
+        <div class="banner-content">
+          <h1 class="banner-title">AlphaSteph</h1>
+        </div>
+      </header>
+
+      <!-- Main content -->
+      <main class="main">
+        <div class="main-inner">
+          <section class="content">
+            {{ content }}
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const toggle = document.querySelector('.nav-toggle');
+      const sidebar = document.querySelector('.sidebar');
+      const shell = document.querySelector('.app-shell');
+      const backdrop = document.querySelector('.drawer-backdrop');
+
+      function setNav(open) {
+        document.body.classList.toggle('nav-open', open);
+        sidebar && sidebar.classList.toggle('open', open);
+        shell && shell.classList.toggle('pushed', open);
+
+        if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+        // Lock background scroll on mobile
+        document.body.style.overflow = open ? 'hidden' : '';
+        document.body.style.touchAction = open ? 'none' : '';
+      }
+
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          const open = !document.body.classList.contains('nav-open');
+          setNav(open);
+        });
+      }
+
+      if (backdrop) {
+        backdrop.addEventListener('click', () => setNav(false));
+      }
+
+      // Close on ESC
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setNav(false);
       });
-    }
+    </script>
+
+    <script>
       (function () {
-    const feedEl = document.getElementById("post-feed");
-    const loadingEl = document.getElementById("feed-loading");
-    if (!feedEl) return; // only run on homepage
+        const feedEl = document.getElementById("post-feed");
+        const loadingEl = document.getElementById("feed-loading");
+        if (!feedEl) return; // only run on homepage
 
-    let posts = [];
-    let index = 0;
-    const PAGE_SIZE = 5;
+        let posts = [];
+        let index = 0;
+        const PAGE_SIZE = 5;
 
-    function renderNext() {
-      const slice = posts.slice(index, index + PAGE_SIZE);
-      index += slice.length;
+        function renderNext() {
+          const slice = posts.slice(index, index + PAGE_SIZE);
+          index += slice.length;
 
-      for (const p of slice) {
-        const card = document.createElement("article");
-        card.className = "post-card";
-        card.innerHTML = `
-          <a class="post-card-link" href="${p.url}">
-            <div class="post-card-header">
-              <h2 class="post-title">${p.title}</h2>
-              <div class="post-meta">${p.date}</div>
-            </div>
-            <p class="post-excerpt">${p.excerpt || ""}</p>
-          </a>
-        `;
+          for (const p of slice) {
+            const card = document.createElement("article");
+            card.className = "post-card";
+            card.innerHTML = `
+              <a class="post-card-link" href="${p.url}">
+                <div class="post-card-header">
+                  <h2 class="post-title">${p.title}</h2>
+                  <div class="post-meta">${p.date}</div>
+                </div>
+                <p class="post-excerpt">${p.excerpt || ""}</p>
+              </a>
+            `;
+            feedEl.appendChild(card);
+          }
 
-        feedEl.appendChild(card);
-      }
+          if (index >= posts.length) {
+            loadingEl.textContent = "You’ve reached the end.";
+            observer.disconnect();
+          } else {
+            loadingEl.textContent = "Loading…";
+          }
+        }
 
-      if (index >= posts.length) {
-        loadingEl.textContent = "You’ve reached the end.";
-        observer.disconnect();
-      } else {
-        loadingEl.textContent = "Loading…";
-      }
-    }
+        const observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) renderNext();
+        }, { rootMargin: "300px" });
 
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) renderNext();
-    }, { rootMargin: "300px" });
-
-    fetch("/feed.json")
-      .then(r => r.json())
-      .then(data => {
-        posts = data;
-        loadingEl.textContent = "Loading…";
-        renderNext();
-        observer.observe(loadingEl);
-      })
-      .catch(() => {
-        loadingEl.textContent = "Couldn’t load posts.";
-      });
-  })();
-  </script>
+        fetch("/feed.json")
+          .then(r => r.json())
+          .then(data => {
+            posts = data;
+            loadingEl.textContent = "Loading…";
+            renderNext();
+            observer.observe(loadingEl);
+          })
+          .catch(() => {
+            loadingEl.textContent = "Couldn’t load posts.";
+          });
+      })();
+    </script>
 
   </body>
 </html>
