@@ -153,6 +153,11 @@
                 </div>
                 <p class="post-excerpt">${p.excerpt || ""}</p>
               </a>
+                {% if post.summary %}
+                    <p class="post-summary">
+                      {{ post.summary }}
+                    </p>
+                {% endif %}
             `;
             feedEl.appendChild(card);
           }
