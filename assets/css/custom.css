@@ -169,9 +169,8 @@ body{
   /* keep your own sidebar background/padding if you have it elsewhere */
   /* background: #0b1b2a; */
 }
-.sidebar.open{ transform: translateX(0); }
 
-/* 4) Backdrop: you created it but never turn it on. This fixes “white page” click-through */
+/* 4) Backdrop */
 .drawer-backdrop{
   position: fixed;
   inset: 0;
@@ -361,83 +360,102 @@ body.nav-open{
 }
 
 /* =========================
-   NAV HOTFIX (paste last)
+   NAV HOTFIX (REPLACE THIS ENTIRE BLOCK)
    ========================= */
 
-/* Ensure sidebar layout is stable */
+/* Sidebar base */
 .sidebar{
-  background: #0b1b2a;              /* FIX: not white */
+  background: #0b1b2a;
   color: #e2e8f0;
   padding: 18px 16px;
   box-sizing: border-box;
 
-  display: flex;                     /* FIX: so footer can stick to bottom */
+  display: flex;
   flex-direction: column;
 }
 
-/* Footer stays at bottom-left */
+/* Footer pinned bottom */
 .sidebar-footer{
-  margin-top: auto;                  /* works ONLY because sidebar is flex-column */
+  margin-top: auto;
   padding-top: 16px;
   display: flex;
   justify-content: flex-start;
 }
 
-/* Your linkedin hover selector targets .social-link but your HTML doesn't have it */
+/* Hover for LinkedIn (your HTML doesn't use .social-link) */
 .sidebar-footer a:hover .linkedin-icon{
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(10, 102, 194, 0.35);
 }
 
-/* Hamburger should be visible and clickable */
+/* Hamburger always clickable */
 .nav-toggle{
-  display: inline-flex !important;   /* FIX: force it back */
+  display: inline-flex;
   position: relative;
-  z-index: 5000;                     /* above banner wallpaper */
+  z-index: 7000;
 }
 
-/* ---------- DESKTOP: sidebar always visible, no backdrop ---------- */
+/* -------------------------
+   DESKTOP (>= 901px): PUSH + TOGGLE
+   ------------------------- */
 @media (min-width: 901px){
+  /* Sidebar becomes a push drawer on desktop */
   .sidebar{
     position: fixed;
     top: 0;
     left: 0;
     width: var(--sidebar-width);
     height: 100vh;
-    transform: none !important;
     z-index: 1100;
+
+    /* DEFAULT CLOSED on desktop */
+    transform: translateX(-100%);
+    transition: transform .25s ease;
   }
 
+  /* Open when nav-open */
+  body.nav-open .sidebar{
+    transform: translateX(0);
+  }
+
+  /* No backdrop on desktop */
   .drawer-backdrop{ display: none !important; }
 
+  /* Content pushes ONLY when nav-open */
   .topbar, .main{
-    margin-left: var(--sidebar-width);
+    margin-left: 0;
+    transition: margin-left 0.25s ease;
   }
 
-  /* Optional: hide hamburger on desktop (enable if you want) */
-  /* .nav-toggle{ display:none !important; } */
+  body.nav-open .topbar,
+  body.nav-open .main{
+    margin-left: var(--sidebar-width);
+  }
 }
 
-/* ---------- MOBILE: drawer overlay (toggle in/out) ---------- */
+/* -------------------------
+   MOBILE (<= 900px): OVERLAY + TOGGLE
+   ------------------------- */
 @media (max-width: 900px){
   :root{ --sidebar-width: min(82vw, 320px); }
 
-  /* Drawer behavior */
   .sidebar{
     position: fixed;
     top: 0;
     left: 0;
     width: var(--sidebar-width);
     height: 100dvh;
-    transform: translateX(-100%) !important;
+
+    transform: translateX(-100%);
     transition: transform .25s ease;
-    z-index: 6000;                   /* above topbar */
-  }
-  body.nav-open .sidebar{
-    transform: translateX(0) !important;
+    z-index: 6000;
   }
 
-  /* Backdrop */
+  body.nav-open .sidebar{
+    transform: translateX(0);
+  }
+
+  /* Backdrop ON for mobile */
   .drawer-backdrop{
     display: block;
     position: fixed;
@@ -453,10 +471,10 @@ body.nav-open{
     pointer-events: auto;
   }
 
-  /* Don't push content on mobile */
-  body.nav-open .topbar,
-  body.nav-open .main{
+  /* No push on mobile */
+  .topbar, .main{
     margin-left: 0 !important;
   }
 }
+
 
