@@ -14,7 +14,7 @@ $$
 
 For this series of VRP-type strategy research, we start with studying a large-cap stock, Apple (Ticker: AAPL), with relevant datasets retrieved through the Wharton Research Data Services (WRDS). We study its VRP to derive a basic signal for a corresponding Put Option strategy that is viable for a retail trader. In a subsequent series, we then study the risk management measures as well as other possible strategies. 
 
-## Using 10DTE  AAPL Options 
+## Research Parameters 
 
 For this study, we anchor our parameters using AAPL put options of ~10DTE (10 Calendar Days / 7 Trading Days), with a __hard minimum of 8DTE and maximum of 12DTE__, with the following reasons:
 
@@ -25,6 +25,8 @@ For this study, we anchor our parameters using AAPL put options of ~10DTE (10 Ca
 10DTE options exhibit materially lower gamma exposure than short-dated contracts, reducing gamma-driven PnL variability, and allowing theta decay to remain a more meaningful and systematic contributor to the overall strategy returns.
 
 The date range for the data that we study is between __1 Jun 2022 and 31 Dec 2024__, or what I categorise as __Post-COVID-19 Regime__. 
+
+We also make sure to avoid any lookahead biases so that the outcomes are implementable in reality.
 
 ## Derivation of IV, RV and VRP
 
@@ -76,6 +78,12 @@ $$
 {\mathbb{E}\!\left[(X_t - \mu)^2\right]}
 $$
 
+<p align="center">
+    <small><em><u>
+      Table 1: AR(1) estimation results for the VRP series.
+    </u></em></small>
+  </p>
+  
 | Lag   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
 |-------|---|---|---|---|---|---|---|---|---|---|
 | ACF   | 1.0000 | 0.8327 | 0.6529 | 0.4904 | 0.3290 | 0.1834 | 0.0336 | -0.0996 | -0.0797 | -0.0485 |
@@ -104,7 +112,7 @@ $$
 <table align="center">
   <p align="center">
     <small><em><u>
-      Table X: AR(1) estimation results for the VRP series.
+      Table 2: AR(1) Model Results
     </u></em></small>
   </p>
   <thead>
@@ -151,8 +159,6 @@ $$
 \mu \equiv \mathbb{E}[X_t] = \frac{\alpha}{1-\phi}.
 $$
 
----
-
 ### Half-life of mean reversion
 
 Define the half-life \(h\) as the number of periods it takes for a deviation from the long-run mean to decay by 50%.  
@@ -189,9 +195,97 @@ Of note, we should not expect the model to provide forecasts of VRP, as the AR(1
 
 ## Monetising VRP Using Naked Puts
 
-We first study a pure approach to monetising VRP through the writing of put options at around 10DTE without considering risk management controls first. 
+We first study a pure approach to monetising VRP through the writing of put options at around 10DTE without considering risk management controls. 
 
 We obtain the dataset from WRDS OptionSuite to get the option contracts in the same date range. We also filtered for the maturity to be less than or equals to 12 days to align closely to our 10DTE analysis. Here, we select the contracts with deltas closest to -0.50 each day, as well as DTE closest to 10DTE, accepting 8DTE and 12DTE as the minimum and maximum respectively.
+
+We start with a simple rule where a trade (put option sold) is executed on t+1 when VRP > 0 at close on time t. We align the ideal holding period with the derived half-life of 4 days minimally before the trade is exited. If t+4 days is a non-business day, or if there is no liquidity based on WRDS dataset, then the next business day or the next available trade day is when the put option is bought back. To note, we assume only one contract is traded each time. 
+
+### Results of Simulated PnL
+
+<figure>
+    <p align="center">
+    <small><em><u>
+      <u>Figure 4: Cumulative PnL over Time</u>
+    </u></em></small>
+  </p>
+  <p align="center">
+    <img src="/assets/img/pnl.png" alt="Modelled VRP" width="600">
+  </p>
+</figure>
+
+<table align="center">
+  <p align="center">
+    <small><em><u>
+      Table 3: Summary performance statistics for the VRP-based trading strategy.
+    </u></em></small>
+  </p>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sample period</td>
+      <td>1 Jun 2022 – 31 Dec 2024</td>
+    </tr>
+    <tr>
+      <td>Total number of trades</td>
+      <td>341</td>
+    </tr>
+    <tr>
+      <td>Total PnL (USD)</td>
+      <td>13,754.50</td>
+    </tr>
+    <tr>
+      <td>Maximum drawdown (USD)</td>
+      <td>8,071.50</td>
+    </tr>
+    <tr>
+      <td>Calmar ratio</td>
+      <td>1.7041</td>
+    </tr>
+  </tbody>
+</table>
+
+
+Over the period of 1 Jun 2022 to 31 Dec 2024, a total of 341 trades (An entry + exit pair is considered 1 trade) were executed, with a total PnL of USD13,754.50 generated. PnL is attributed to the trade entry date to reflect the timing of risk deployment rather than exit realization. 
+
+Despite positive aggregate performance, the strategy exhibits a substantial peak-to-trough maximum drawdown of USD 8,071.50, indicating significant path-dependent risk. The resulting Calmar ratio of 1.70 suggests that while returns are positive, they are achieved with considerable drawdown exposure, highlighting a relatively aggressive risk profile that warrants further risk-management refinement.
+
+Assuming a starting capital of USD50,000, suitable for an entry/intermediate retail trader, as well as an annualised risk-free rate of 3%, the calculated Sharpe ratio and Kelly Criterion are as follows:
+
+<table align="center">
+  <p align="center">
+    <small><em><u>
+      Table 4: Risk-adjusted performance metrics for the VRP-based trading strategy.
+    </u></em></small>
+  </p>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sharpe ratio</td>
+      <td>1.6452</td>
+    </tr>
+    <tr>
+      <td>Kelly fraction</td>
+      <td>0.1828</td>
+    </tr>
+  </tbody>
+</table>
+
+The Sharpe ratio indicates attractive risk-adjusted returns, while the Kelly fraction provides a theoretical upper bound on capital allocation under the assumption of stable return distributions. 
+
+## Testing for Regime-resilience
+
+
 
 ### Citations
 Feunou, B., Lopez Aliouchkin, R., Tédongap, R., & Xi, L. (2017). Variance premium, downside risk and expected stock returns (No. 2017-58). Bank of Canada. 
