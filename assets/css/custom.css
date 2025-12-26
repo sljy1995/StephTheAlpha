@@ -243,7 +243,8 @@ body.nav-open{ overflow-x: hidden; }
 .content table,
 article table,
 .prose table{
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
   background: #ffffff;
