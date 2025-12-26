@@ -236,6 +236,43 @@ body.nav-open{ overflow-x: hidden; }
 }
 .nav a:hover{ background: rgba(226, 232, 240, 0.1); }
 
+/* =========================
+   TABLE STYLING (GLOBAL)
+   ========================= */
+
+.content table,
+article table,
+.prose table{
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.18);
+  border-radius: 12px;
+  overflow: hidden; /* keeps rounded corners */
+}
+
+.content th,
+.content td,
+article th,
+article td,
+.prose th,
+.prose td{
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.content th,
+article th,
+.prose th{
+  background: rgba(15, 23, 42, 0.05);
+  font-weight: 700;
+}
+
 /* Sidebar footer pinned bottom */
 .sidebar-footer{
   margin-top: auto;
