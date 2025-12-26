@@ -31,7 +31,7 @@ This site is a working journal where I basically document my projects on my thou
   Translating theory into code, with attention to bias, assumptions, and failure modes.
 
 - **Retail constraints**  
-  Position sizing, transaction costs, margin, and what *doesn’t* scale down well from institutional settings.
+  Position sizing, transaction costs, and margin.
 
 *I hope to extend my projects into:*
 - Cryptocurrency
