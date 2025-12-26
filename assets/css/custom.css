@@ -344,7 +344,46 @@ body.nav-open{ overflow-x: hidden; }
     --sidebar-width: min(82vw, 320px);
     --topbar-height: 110px;
   }
+   
+  /* 1) Prevent the whole page from shifting sideways on mobile */
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
 
+  /* 2) Make any equation / math block scroll instead of blowing out layout */
+  .katex-display,
+  .math-display,
+  .equation,
+  .equation-block {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* If equations are images/svg/canvas */
+  img, svg, canvas {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* 3) Make tables scroll horizontally on mobile */
+  .table-wrap,
+  .table-container,
+  .prose table,
+  article table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* keep table from forcing a wider-than-screen layout */
+  .prose table,
+  article table {
+    min-width: 520px; /* forces scroll instead of squish; tweak 480–700 */
+  }
   .sidebar{
     height: 100dvh;
     z-index: 6000;
