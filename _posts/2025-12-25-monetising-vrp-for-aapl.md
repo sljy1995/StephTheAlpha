@@ -96,15 +96,15 @@ $$
 - p-value: 1.84 × 10⁻⁷  
 - 1% critical value: −3.44  
 
-Given the autocorrelation values, it can be seen that the ***VRP has strong short-term persistence, and gradually decays to 0 within 10 calendar days and is therefore mean-reverting***. This can been seen by the high first-order autocorrelation function parameter ≈ 0.8327 and an autocorrelation close to 0 at lag 7 (AR(7) ≈ -0.0996, consistent with a stationary, mean-reverting process. Given these, it is suitable for VRP to be modelled as a time-series. Modelling VRP dynamic enables effective timing and sizing of volatility trades, allowing the trader to systematically monetise mispricing while managing exposure to risk. 
+Given the autocorrelation values, it can be seen that the ***VRP has strong short-term persistence, and gradually decays to 0 within 10 calendar days and is therefore mean-reverting***. This can been seen by the high first-order autocorrelation function parameter ≈ 0.8327 and an autocorrelation close to 0 at lag 7 (AR(7) ≈ -0.0996, consistent with a stationary, mean-reverting process. 
 
 We further assess stationarity using the __Augmented Dickey-Fuller (ADF) test__, which tests the null hypothesis of a unit root against the alternative of stationarity. Since the ADF statistic value is less than the critical values, and has a p-value of 0.000001, **we can reject the null hypothesis of a unit root, and conclude that there is strong statistical evidence that the VRP series is stationary over the sample period**.
 
-These provide motivation for modelling VRP as a time-series.
+These provide motivation for modelling VRP as a time-series, which will provide insights into effective timing and sizing of volatility trades, allowing the trader to systematically monetise mispricing while managing exposure to risk. 
 
 ## Modelling VRP as a Time-series
 
-We now model VRP using AR(1) given the pronounced first-order autocorrelation, and confirm if the model is statistically useable, before determining the long-run mean and half-life to understand if monetising VRP will reap positive PnL, as well as the decay rate of volatility spikes. 
+We now model VRP using AR(1) given the pronounced first-order autocorrelation, and confirm if the model is statistically useable, before determining the long-run mean and half-life to understand if monetising VRP will reap positive PnL, as well as the decay rate of volatility spikes. The total number of observations is 644 for this model.
 
 $$
 \mathrm{VRP}_t = \alpha + \phi \, \mathrm{VRP}_{t-1} + \varepsilon_t,
@@ -146,12 +146,6 @@ $$
     </tr>
   </tbody>
 </table>
-
-**Model diagnostics**
-- Number of observations: 644  
-- Innovation standard deviation ($\hat{\sigma}$): 0.055  
-- AIC: −1896.6  
-- BIC: −1883.2  
 
 ### Long-run mean (unconditional mean)
 
@@ -257,7 +251,7 @@ Over the period of 1 Jun 2022 to 31 Dec 2024, a total of 341 trades (An entry + 
 
 Despite positive aggregate performance, the strategy exhibits a substantial peak-to-trough maximum drawdown of USD 8,071.50, indicating significant path-dependent risk. The resulting Calmar ratio of 1.70 suggests that while returns are positive, they are achieved with considerable drawdown exposure, highlighting a relatively aggressive risk profile that warrants further risk-management refinement.
 
-Assuming a starting capital of USD50,000, suitable for an entry/intermediate retail trader, as well as an annualised risk-free rate of 3%, the calculated Sharpe ratio and Kelly Criterion are as follows:
+Assuming a starting capital of USD50,000, suitable for an entry/intermediate retail trader, as well as an annualised risk-free rate of 3%, the calculated Sharpe ratio (capital-based) and Kelly Criterion are as follows:
 
 <table align="center">
   <p align="center">
