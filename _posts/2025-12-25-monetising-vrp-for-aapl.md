@@ -176,7 +176,7 @@ $$
 
 Based on the results, we have an AR(1) modelled VRP that is mean-reverting with an __implied half-life of approximately 4 days__. The statistically significant intercept also allows us to derive the __long run mean of the VRP to be at 0.0254__, consistent with structural overpricing of short-dated equity options. This provides motivation for short-horizon volatility selling strategies to monetise the decay of mispricing.
 
-Of note, we should not expect the model to provide forecasts of VRP, as the AR(1) process only factors in effects of the previous day's VRP, and at horizons beyond one week, we should expect reversion to the long run mean of 0.0254. We will talk about strategies to utilse the knowledge of half-life in guiding trade timings and holding periods subsequently.
+Of note, we should not expect the model to provide forecasts of VRP, as the AR(1) process only factors in effects of the previous day's VRP, and at horizons beyond one week, we should expect reversion to the long run mean of 0.0254. The knowledge of half-life will guiding the strategy's holding period.
 
 <figure>
     <p align="center">
@@ -281,7 +281,7 @@ The Sharpe ratio indicates **attractive risk-adjusted returns**, while the Kelly
 
 ## Testing for Regime-resilience
 
-A truly useful strategy is one that stands the test of time and events. So we put the strategy to test by backtesting through a different date range to understand if the strategy and signal is regime-neutral. The backtested date range is 1 Jan 2018 to 31 May 2022, which includes Pre-COVID-19 and stretches through the peak of the COVID-19 pandemic.
+A truly useful strategy is one that stands the test of time and events. So we put the strategy to test by backtesting through a different date range to understand if the strategy and signal is regime-resilient. The backtested date range is 1 Jan 2018 to 31 May 2022, which includes Pre-COVID-19 and stretches through the peak of the COVID-19 pandemic.
 
 <figure>
     <p align="center">
@@ -294,17 +294,17 @@ A truly useful strategy is one that stands the test of time and events. So we pu
   </p>
 </figure>
 
-A total number of 256 trades were executed over 1 Jan 2018 to 31 May 2022 (4.5 years), with a **total PnL of USD17,107.50** generated. The **max drawdown is USD5,635.50** and corresponding **Calmar ratio is 3.0357**. The strategy has a **Sharpe ratio of 2.3719** and a **Kelly fraction of 0.2512**.
+A total number of 256 trades were executed over 1 Jan 2018 to 31 May 2022 (4.5 years), with a **total PnL of USD17,107.50** generated. The **max drawdown is USD5,635.50** and corresponding **Calmar ratio is 3.0357**. The strategy has a **Sharpe ratio of 2.3719** and a **Kelly fraction of 0.2512**. This also indicates the likelihood that the strategy can still reap profits amidst elevated uncertainty.
 
 ## Conclusion
 
 Monetising VRP is a widely recognised baseline approach to generating PnL. Conceptually, it is often likened to insurance sellers who earn premiums by providing their clients protection against perceived risks that, on average, exceed their realised likelihood or magnitude.
 
-This approach to monetising the volatility risk premium through systematic put writing (capped at at most one position per day) is readily implementable by retail traders. However, at this stage of the analysis, the primary limitation lies in the absence of explicit risk management mechanisms. In particular, short naked put positions expose the trader to adverse delta and gamma dynamics during sharp market moves. While the strategy benefits from premium collection under normal conditions, downside losses can be substantial in extreme scenarios. 
+This approach to monetise VRP through systematic put writing (capped at at most one trade per day) is readily implementable by retail traders. However, at this stage of the analysis, the primary limitation lies in the absence of explicit risk management mechanisms. In particular, short naked put positions expose the trader to adverse delta and gamma dynamics during sharp market moves. While the strategy benefits from premium collection under normal conditions, downside losses can be substantial in extreme scenarios. There is also opportunity to finesse the signal better, going beyond the simply defined VRP > 0 signal.
 
 I will explain the risks of this strategy, and consider appropriate risk management measures in a subsequent series.
 
 ### Citations
 Feunou, B., Lopez Aliouchkin, R., Tédongap, R., & Xi, L. (2017). Variance premium, downside risk and expected stock returns (No. 2017-58). Bank of Canada. 
 
-
+*PS: GenAI was used to support the writing of this piece - but mostly for equation writing, cleaning up of markdown formatting, and language!)*
