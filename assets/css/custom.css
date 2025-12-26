@@ -344,48 +344,69 @@ body.nav-open{ overflow-x: hidden; }
     --sidebar-width: min(82vw, 320px);
     --topbar-height: 110px;
   }
-   
-  /* 1) Prevent the whole page from shifting sideways on mobile */
-  html, body {
+
+  /* IMPORTANT: On iOS, overflow-x:hidden on body/html can kill inner horizontal scroll */
+  html, body{
     width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip; /* better than hidden for allowing inner scroll */
   }
 
-  /* 2) Make any equation / math block scroll instead of blowing out layout */
-  .katex-display,
-  .math-display,
-  .equation,
-  .equation-block {
+  /* --- MATH: make MathJax/KaTeX blocks horizontally scrollable --- */
+
+  /* MathJax v3 (common) */
+  mjx-container[jax][display="true"]{
+    display: block;
     max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
   }
 
-  /* If equations are images/svg/canvas */
-  img, svg, canvas {
-    max-width: 100%;
-    height: auto;
-  }
-   
-  .katex { white-space: nowrap; }
-   
-  /* 3) Make tables scroll horizontally on mobile */
-  .table-wrap,
-  .table-container,
-  .prose table,
-  article table {
+  /* MathJax v2 fallback */
+  .MathJax_Display{
     display: block;
-    width: 100%;
+    max-width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
   }
 
-  /* keep table from forcing a wider-than-screen layout */
-  .prose table,
-  article table {
-    min-width: 520px; /* forces scroll instead of squish; tweak 480–700 */
+  /* KaTeX display math */
+  .katex-display{
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
   }
+  .katex-display > .katex{
+    white-space: nowrap; /* keep one-line equation scrollable */
+  }
+
+  /* If your "equations" are images/svg/canvas */
+  img, svg, canvas{
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* --- TABLES: make them scroll on mobile reliably --- */
+  .content table,
+  article table,
+  .prose table{
+    display: block;              /* enable scroll container behavior */
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure the table is allowed to be wider than the viewport */
+  .content table{
+    width: max-content;
+    min-width: 100%;
+  }
+
+  /* --- Sidebar overlay behavior (your original, unchanged) --- */
   .sidebar{
     height: 100dvh;
     z-index: 6000;
@@ -396,7 +417,7 @@ body.nav-open{ overflow-x: hidden; }
     margin-left: 0 !important;
   }
 
-  /* Mobile topbar layout polish (optional, keeps title centered) */
+  /* Mobile topbar layout polish (your original) */
   .topbar{
     display: grid;
     grid-template-columns: 48px 1fr 48px;
@@ -420,7 +441,7 @@ body.nav-open{ overflow-x: hidden; }
     line-height: 1.1;
   }
 
-  /* Make equations quieter on mobile */
+  /* Make wallpaper equations quieter on mobile (your original) */
   .eq-wallpaper{
     opacity: 0.10;
     transform: rotate(-6deg) scale(0.95);
