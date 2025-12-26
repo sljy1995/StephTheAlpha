@@ -247,9 +247,9 @@ We start with a simple rule where a trade (put option sold) is executed on t+1 w
 </table>
 
 
-Over the period of 1 Jun 2022 to 31 Dec 2024, a total of 341 trades (An entry + exit pair is considered 1 trade) were executed, with a total PnL of USD13,754.50 generated. PnL is attributed to the trade entry date to reflect the timing of risk deployment rather than exit realization. 
+Over the period of 1 Jun 2022 to 31 Dec 2024, a **total of 341 trades** (An entry + exit pair is considered 1 trade) were executed, with a **total PnL of USD13,754.50 generated**. PnL is attributed to the trade entry date to reflect the timing of risk deployment rather than exit realization. 
 
-Despite positive aggregate performance, the strategy exhibits a substantial peak-to-trough maximum drawdown of USD 8,071.50, indicating significant path-dependent risk. The resulting Calmar ratio of 1.70 suggests that while returns are positive, they are achieved with considerable drawdown exposure, highlighting a relatively aggressive risk profile that warrants further risk-management refinement.
+Despite positive aggregate performance, the strategy exhibits a substantial peak-to-trough **maximum drawdown of USD 8,071.50**, indicating significant path-dependent risk. The resulting **Calmar ratio of 1.70** suggests that while returns are positive, they are achieved with considerable drawdown exposure, highlighting a relatively aggressive risk profile that warrants further risk-management refinement.
 
 Assuming a starting capital of USD50,000, suitable for an entry/intermediate retail trader, as well as an annualised risk-free rate of 3%, the calculated Sharpe ratio (capital-based) and Kelly Criterion are as follows:
 
@@ -277,7 +277,7 @@ Assuming a starting capital of USD50,000, suitable for an entry/intermediate ret
   </tbody>
 </table>
 
-The Sharpe ratio indicates attractive risk-adjusted returns, while the Kelly fraction provides a theoretical upper bound on capital allocation under the assumption of stable return distributions. 
+The Sharpe ratio indicates **attractive risk-adjusted returns**, while the Kelly fraction provides a theoretical upper bound on capital allocation under the assumption of stable return distributions. 
 
 ## Testing for Regime-resilience
 
