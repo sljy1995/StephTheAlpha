@@ -367,7 +367,9 @@ body.nav-open{ overflow-x: hidden; }
     max-width: 100%;
     height: auto;
   }
-
+   
+  .katex { white-space: nowrap; }
+   
   /* 3) Make tables scroll horizontally on mobile */
   .table-wrap,
   .table-container,
