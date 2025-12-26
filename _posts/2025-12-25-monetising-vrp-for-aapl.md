@@ -2,7 +2,7 @@
 layout: default
 title: "Monetising Volatility Risk Premium for AAPL"
 date: 2025-12-25
-excerpt: "The persistence of AAPL’s volatility risk premium was studied and  converted into a systematic put-selling signal for retail traders. Over a period of 2.5 years, the strategy was able to generate a total of USD 13,745.50 with one contract traded per execution, with a max drawdown of USD 8071.50. Assuming a portfolio capital of USD50,000 for a beginner to intermediate retail trader, the Sharpe ratio is 1.65, assuming a risk-free rate of 3%."
+excerpt: "The persistence of AAPL’s volatility risk premium was studied and  converted into a systematic put-selling signal for retail traders. Over a period of 2.5 years, the strategy was able to generate a total of USD 13,745.50 with one contract traded per execution, with a max drawdown of USD 8071.50. Assuming a portfolio capital of USD50,000 for a beginner to intermediate retail trader, and a risk-free rate of 3%, the Sharpe ratio is 1.65. Of note, risk management measures have yet to been incorporated."
 ---
 # Monetising Volatility Risk Premium for AAPL 
 
@@ -12,18 +12,21 @@ $$
 \mathrm{VRP} \equiv \mathrm{IV} - \mathrm{RV}
 $$
 
-For this series of VRP-type strategy research, we start with studying a large-cap stock, Apple (Ticker: AAPL), with relevant datasets are provided by Wharton Research Data Services (WRDS). We study its VRP to derive a basic signal for a corresponding Put Option strategy that is viable for a retail trader. In a subsequent series, we then study the risk management measures as well as other possible strategies. 
+For this series of VRP-type strategy research, we start with studying a large-cap stock, Apple (Ticker: AAPL), with relevant datasets retrieved through the Wharton Research Data Services (WRDS). We study its VRP to derive a basic signal for a corresponding Put Option strategy that is viable for a retail trader. In a subsequent series, we then study the risk management measures as well as other possible strategies. 
 
 ## Using 10DTE  AAPL Options 
 
 For this study, we anchor our parameters using AAPL put options of ~10DTE (10 Calendar Days / 7 Trading Days), with a __hard minimum of 8DTE and maximum of 12DTE__, with the following reasons:
 
-1.   __Liquidity__: 10DTE options present sufficient liquidity for a more optimal bid-ask spread as well as sufficient order-book depth. This ensures fill quality, reduces slippage, and is realistically testable and executable.
-2.   __Dampened Gamma Risks__: 10DTE options exhibit materially lower gamma exposure than short-dated contracts, reducing gamma-driven PnL variability, and allowing theta decay to remain a more meaningful and systematic contributor to the overall strategy returns.
+1.   **Liquidity**\
+10DTE options present sufficient liquidity for a more optimal bid-ask spread as well as sufficient order-book depth. This ensures fill quality, reduces slippage, and is realistically testable and executable.
+
+3.   **Dampened Gamma Risks**\
+10DTE options exhibit materially lower gamma exposure than short-dated contracts, reducing gamma-driven PnL variability, and allowing theta decay to remain a more meaningful and systematic contributor to the overall strategy returns.
 
 The date range for the data that we study is between __1 Jun 2022 and 31 Dec 2024__, or what I categorise as __Post-COVID-19 Regime__. 
 
-## Derivation of IV and RV
+## Derivation of IV, RV and VRP
 
 We use OptionMetric's Ivy DB US Option Volatility Surface dataset to derive the annualised IV from 10DTE near-ATM AAPL put options (Δ ≈ −0.50), and corresponding AAPL spot prices from Centre for Research in Security Prices (CRSP) datasets to derive the annualised RV over 7 trading days rolling windows. Thereafter, the VRP is derived.
 
@@ -41,7 +44,7 @@ $$
 <figure>
     <p align="center">
     <small><em>
-      <u>Figure 1: Volatility Risk Premium for AAPL (IV − RV)</u>
+      <u>Figure 1: Volatility Risk Premium for AAPL</u>
    </em></small>
   </p>
   <p align="center">
@@ -50,6 +53,9 @@ $$
   
 </figure>
 
+## Analysis of VRP
+
+The VRP of AAPL was plotted over time, with plausible stationarity observed.  
 
 <figure>
     <p align="center">
@@ -58,9 +64,134 @@ $$
    </em></small>
   </p>
   <p align="center">
-    <img src="/assets/img/aapl_vrp.png" alt="AAPL VRP" width="600">
+    <img src="/assets/img/aapl_vrp.png" alt="AAPL VRP Over Time" width="600">
   </p>
-  
 </figure>
+
+We move on to examine the temporal dependence of VRP by computing the sample autocorrelation function (ACF) across multiple lags. 
+
+$$
+\rho(k) \;=\;
+\frac{\mathbb{E}\!\left[(X_t - \mu)(X_{t-k} - \mu)\right]}
+{\mathbb{E}\!\left[(X_t - \mu)^2\right]}
+$$
+
+| Lag   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|-------|---|---|---|---|---|---|---|---|---|---|
+| ACF   | 1.0000 | 0.8327 | 0.6529 | 0.4904 | 0.3290 | 0.1834 | 0.0336 | -0.0996 | -0.0797 | -0.0485 |
+
+
+**Augmented Dickey–Fuller Test (VRP)**  
+- Test statistic: −5.98  
+- p-value: 1.84 × 10⁻⁷  
+- 1% critical value: −3.44  
+
+Given the autocorrelation values, it can be seen that the ***VRP has strong short-term persistence, and gradually decays to 0 within 10 calendar days and is therefore mean-reverting***. This can been seen by the high first-order autocorrelation function parameter ≈ 0.8327 and an autocorrelation close to 0 at lag 7 (AR(7) ≈ -0.0996, consistent with a stationary, mean-reverting process. Given these, it is suitable for VRP to be modelled as a time-series. Modelling VRP dynamic enables effective timing and sizing of volatility trades, allowing the trader to systematically monetise mispricing while managing exposure to risk. 
+
+We further assess stationarity using the __Augmented Dickey-Fuller (ADF) test__, which tests the null hypothesis of a unit root against the alternative of stationarity. Since the ADF statistic value is less than the critical values, and has a p-value of 0.000001, **we can reject the null hypothesis of a unit root, and conclude that there is strong statistical evidence that the VRP series is stationary over the sample period**.
+
+These provide motivation for modelling VRP as a time-series.
+
+## Modelling VRP as a Time-series
+
+We now model VRP using AR(1) given the pronounced first-order autocorrelation, and confirm if the model is statistically useable, before determining the long-run mean and half-life to understand if monetising VRP will reap positive PnL, as well as the decay rate of volatility spikes. 
+
+$$
+\mathrm{VRP}_t = \alpha + \phi \, \mathrm{VRP}_{t-1} + \varepsilon_t,
+\qquad \varepsilon_t \sim \mathcal{N}(0, \sigma^2)
+$$
+
+<table align="center">
+  <p align="center">
+    <small><em><u>
+      Table X: AR(1) estimation results for the VRP series.
+    </u></em></small>
+  </p>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Estimate</th>
+      <th>Std. Error</th>
+      <th>z-stat</th>
+      <th>p-value</th>
+      <th>95% CI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Intercept ($\alpha$)</td>
+      <td>0.0042</td>
+      <td>0.0020</td>
+      <td>1.89</td>
+      <td>0.059</td>
+      <td>[−0.000, 0.009]</td>
+    </tr>
+    <tr>
+      <td>AR(1) ($\phi$)</td>
+      <td>0.8327</td>
+      <td>0.0220</td>
+      <td>38.14</td>
+      <td>&lt; 0.001</td>
+      <td>[0.790, 0.876]</td>
+    </tr>
+  </tbody>
+</table>
+
+**Model diagnostics**
+- Number of observations: 644  
+- Innovation standard deviation ($\hat{\sigma}$): 0.055  
+- AIC: −1896.6  
+- BIC: −1883.2  
+
+### Long-run mean (unconditional mean)
+
+The long-run (unconditional) mean for an AR(1) process is:
+
+$$
+\mu \equiv \mathbb{E}[X_t] = \frac{\alpha}{1-\phi}.
+$$
+
+---
+
+### Half-life of mean reversion
+
+Define the half-life \(h\) as the number of periods it takes for a deviation from the long-run mean to decay by 50%.  
+For an AR(1), deviations decay geometrically:
+
+$$
+X_t - \mu = \phi^k (X_{t-k} - \mu).
+$$
+
+Setting the deviation decay factor equal to one-half:
+
+$$
+|\phi|^h = \frac{1}{2}
+$$
+
+$$
+h = \frac{\ln(1/2)}{\ln|\phi|}.
+$$
+
+Based on the results, we have an AR(1) modelled VRP that is mean-reverting with an __implied half-life of approximately 4 days__. The statistically significant intercept also allows us to derive the __long run mean of the VRP to be at 0.0254__, consistent with structural overpricing of short-dated equity options. This provides motivation for short-horizon volatility selling strategies to monetise the decay of mispricing.
+
+Of note, we should not expect the model to provide forecasts of VRP, as the AR(1) process only factors in effects of the previous day's VRP, and at horizons beyond one week, we should expect reversion to the long run mean of 0.0254. We will talk about strategies to utilse the knowledge of half-life in guiding trade timings and holding periods subsequently.
+
+<figure>
+    <p align="center">
+    <small><em><u>
+      <u>Figure 3: Modelled VRP against Actual VRP</u>
+    </u></em></small>
+  </p>
+  <p align="center">
+    <img src="/assets/img/ar1_vrp.png" alt="Modelled VRP" width="600">
+  </p>
+</figure>
+
+## Monetising VRP Using Naked Puts
+
+We first study a pure approach to monetising VRP through the writing of put options at around 10DTE without considering risk management controls first. 
+
+We obtain the dataset from WRDS OptionSuite to get the option contracts in the same date range. We also filtered for the maturity to be less than or equals to 12 days to align closely to our 10DTE analysis. Here, we select the contracts with deltas closest to -0.50 each day, as well as DTE closest to 10DTE, accepting 8DTE and 12DTE as the minimum and maximum respectively.
+
 ### Citations
 Feunou, B., Lopez Aliouchkin, R., Tédongap, R., & Xi, L. (2017). Variance premium, downside risk and expected stock returns (No. 2017-58). Bank of Canada. 
