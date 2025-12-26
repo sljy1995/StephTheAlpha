@@ -4,6 +4,8 @@ title: "Monetising Volatility Risk Premium for AAPL"
 date: 2025-12-25
 excerpt: "The persistence of AAPL’s volatility risk premium was studied and  converted into a systematic put-selling signal for retail traders. Over a period of 2.5 years, the strategy was able to generate a total of USD 13,745.50 with one contract traded per execution, with a max drawdown of USD 8071.50. Assuming a portfolio capital of USD50,000 for a beginner to intermediate retail trader, and a risk-free rate of 3%, the Sharpe ratio is 1.65. Of note, risk management measures have yet to been incorporated."
 ---
+__All content here is for research and educational purposes only, not financial advice.__
+
 # Monetising Volatility Risk Premium for AAPL 
 
 Volatility Risk Premium (VRP) refers to the difference between the Implied Volatility (IV), that is forward-looking and derived from option prices, and the Realised Volatility (RV) that is the actual variance that is realised over time (Feunou, 2017). A common observation is that IV is usually larger than RV, which indicates opportunity to capitalise on the premium from the difference between IV and RV, which is the VRP. 
@@ -210,7 +212,7 @@ We start with a simple rule where a trade (put option sold) is executed on t+1 w
     </u></em></small>
   </p>
   <p align="center">
-    <img src="/assets/img/pnl.png" alt="Modelled VRP" width="600">
+    <img src="/assets/img/pnl.png" alt="Simulated PnL" width="600">
   </p>
 </figure>
 
@@ -285,7 +287,30 @@ The Sharpe ratio indicates attractive risk-adjusted returns, while the Kelly fra
 
 ## Testing for Regime-resilience
 
+A truly useful strategy is one that stands the test of time and events. So we put the strategy to test by backtesting through a different date range to understand if the strategy and signal is regime-neutral. The backtested date range is 1 Jan 2018 to 31 May 2022, which includes Pre-COVID-19 and stretches through the peak of the COVID-19 pandemic.
 
+<figure>
+    <p align="center">
+    <small><em><u>
+      <u>Figure 5: Cumulative PnL over 1 Jan 2018 to 31 May 2022</u>
+    </u></em></small>
+  </p>
+  <p align="center">
+    <img src="/assets/img/bt_pnl.png" alt="Backtested PnL" width="600">
+  </p>
+</figure>
+
+A total number of 256 trades were executed over 1 Jan 2018 to 31 May 2022 (4.5 years), with a **total PnL of USD17,107.50** generated. The **max drawdown is USD5,635.50** and corresponding **Calmar ratio is 3.0357**. The strategy has a **Sharpe ratio of 2.3719** and a **Kelly fraction of 0.2512**.
+
+## Conclusion
+
+Monetising VRP is a widely recognised baseline approach to generating PnL. Conceptually, it is often likened to insurance sellers who earn premiums by providing their clients protection against perceived risks that, on average, exceed their realised likelihood or magnitude.
+
+This approach to monetising the volatility risk premium through systematic put writing (capped at at most one position per day) is readily implementable by retail traders. However, at this stage of the analysis, the primary limitation lies in the absence of explicit risk management mechanisms. In particular, short naked put positions expose the trader to adverse delta and gamma dynamics during sharp market moves. While the strategy benefits from premium collection under normal conditions, downside losses can be substantial in extreme scenarios. 
+
+I will explain the risks of this strategy, and consider appropriate risk management measures in a subsequent series.
 
 ### Citations
 Feunou, B., Lopez Aliouchkin, R., Tédongap, R., & Xi, L. (2017). Variance premium, downside risk and expected stock returns (No. 2017-58). Bank of Canada. 
+
+
