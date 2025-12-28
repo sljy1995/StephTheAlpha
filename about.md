@@ -46,6 +46,12 @@ I try to be explicit about **limitations, risks, and assumptions**, not just res
 
 *Education*
 
+<div class="uni-logos">
+  <img src="/assets/images/University_of_Edinburgh-Logo.png" alt="University of Edinburgh">
+  <img src="/assets/images/University_of_Cambridge-Logo.png" alt="University of Cambridge">
+  <img src="/assets/images/National_University_of_Singapore_logo_NUS.png" alt="National University of Singapore">
+</div>
+
 I come from a quantitative background, with the following education:
 - BSc(Hons) in Theoretical Physics, University of Edinburgh
 - MPhil in Technology Policy, University of Cambridge
