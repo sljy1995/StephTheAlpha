@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title: "First Post: What This Site Is"
 date: 2025-12-24
 ---
