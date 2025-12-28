@@ -94,28 +94,6 @@
         <div class="main-inner">
           <section class="content">
             {{ content }}
-
-                {% if page.layout == "post" %}
-                <section class="comments">
-                  <h2>Comments</h2>
-                  <script src="https://giscus.app/client.js"
-                    data-repo="YOURUSER/YOURREPO"
-                    data-repo-id="YOUR_REPO_ID"
-                    data-category="Comments"
-                    data-category-id="YOUR_CATEGORY_ID"
-                    data-mapping="pathname"
-                    data-strict="0"
-                    data-reactions-enabled="1"
-                    data-emit-metadata="0"
-                    data-input-position="top"
-                    data-theme="preferred_color_scheme"
-                    data-lang="en"
-                    crossorigin="anonymous"
-                    async>
-                  </script>
-                </section>
-                {% endif %}
-
           </section>
         </div>
       </main>
