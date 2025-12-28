@@ -290,13 +290,21 @@ article td:last-child,
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 32px;
-  margin: 24px 0;
+  gap: 40px;
+  margin: 32px 0;
 }
 
-.uni-logos img{
-  height: 70px;       /* control size here */
-  width: auto;
+.logo-box{
+  width: 220px;     /* equal visual width */
+  height: 80px;     /* equal visual height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-box img{
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
 }
 
