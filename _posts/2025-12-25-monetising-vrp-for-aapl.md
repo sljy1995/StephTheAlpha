@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title: "Monetising Volatility Risk Premium for AAPL, Part I: Risky Returns from Naked Puts"
 date: 2025-12-25
 excerpt: "The persistence of AAPL’s volatility risk premium was studied and  converted into a systematic put-selling signal for retail traders. Over a period of 2.5 years, the strategy was able to generate a total of USD 13,745.50 with one contract traded per execution, with a max drawdown of USD 8071.50. Assuming a portfolio capital of USD50,000 for a beginner to intermediate retail trader, and a risk-free rate of 3%, the Sharpe ratio is 1.65. Of note, risk management measures have yet to been incorporated."
