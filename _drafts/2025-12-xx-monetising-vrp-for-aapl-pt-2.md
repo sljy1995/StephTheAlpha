@@ -30,6 +30,12 @@ We first examine the empirical distribution of the PnL to assess the magnitude a
 
 <div align="center">
 
+  <p align="center">
+    <small><em><u>
+      Table 1: Summary Statistics of PnL
+    </u></em></small>
+  </p>
+
 | Metric | Value |
 |------|------:|
 | Number of trades | 341 |
@@ -48,6 +54,12 @@ The distribution deviates substantially from normality, evidenced by its negativ
 
 <div align="center">
 
+  <p align="center">
+    <small><em><u>
+      Table 2: VaR and ES at 95% and 99% Confidence Levels
+    </u></em></small>
+  </p>
+
 | Risk Metric | 95% Level | 99% Level |
 |------------|----------:|----------:|
 | Value-at-Risk (VaR) | -677.85 | -1025.91 |
@@ -57,9 +69,30 @@ The distribution deviates substantially from normality, evidenced by its negativ
 
 Given the VaR estimates, the strategy’s losses are not expected to exceed USD 677.85 and USD 1,025.91 at the 95% and 99% confidence levels, respectively. Of note, the VaR estimates are computed on a per-trade basis given the strategy's trading approach. With the ES estimates, we can expect an average losses of USD 938.38 and USD 1139.38 conditional on the losses exceeding the respective VaR thresholds.
 
+Nonetheless, while VaR and ES provide a measure of the extent of the risk, they do not explain the underlying causes for it.
+
 ## Delta and Gamma Risks
 
-While VaR and ES provide a measure of the extent of the risk, they do not explain the underlying causes for it. In particular, for naked puts, these extreme losses are driven by systemic delta and gamma exposures that intensify during stress-conditions where the market moves sharply.
+ Given a options-based strategy, it is necessary to analyse the Greeks and their associated risks. 
+
+<div align="center">
+
+  <p align="center">
+    <small><em><u>
+      Table 3: Overview of Greeks-associated Risks
+    </u></em></small>
+  </p>
+
+ | Risk  | How it Affects Strategy's PnL | What this Greek Means? |
+| ----- | ----------------------- |--------------------|
+| Vega  | Primary *return* driver | Rate of change of option price given a change in IV |
+| Theta | Income accrual          | Rate of change of option price given time decay|
+| **Delta** | **Directional loss** | Rate of change of option price given change in underlying price |
+| **Gamma** | **Tail amplification** | Rate of change of Delta given a change in underlying price |
+
+ </div>
+
+As a strategy built on monetising VRP, vega exposure primarily drives expected returns and is secondary to delta and gamma in driving extreme losses. In particular, a short put position carries positive delta, implying that profits increase as the underlying price rises and losses accrue as it falls. During sharp market declines, this directional exposure intensifies due to negative gamma, causing losses to accelerate non-linearly. We therefore focus our analysis on delta and gamma risks, which are the primary drivers of tail losses in naked put strategies.
 
 
 
