@@ -91,7 +91,7 @@ $$
 | ACF   | 1.0000 | 0.8327 | 0.6529 | 0.4904 | 0.3290 | 0.1834 | 0.0336 | -0.0996 | -0.0797 | -0.0485 |
 
 
-**Augmented Dickey–Fuller Test (VRP)**  
+**Augmented Dickey–Fuller Test**  
 - Test statistic: −5.98  
 - p-value: 1.84 × 10⁻⁷  
 - 1% critical value: −3.44  
