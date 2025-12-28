@@ -14,7 +14,7 @@ For naked puts, the downside risks can be hefty, and one extreme event could wip
 
 ## Examining the Tail Risks
 
-We first visualise the spread of the PnL to understand the extent of tail risk associated with this strategy. 
+We first examine the empirical distribution of the PnL to assess the magnitude and asymmetry of the tail risk associated with this strategy. 
 
 <figure>
     <p align="center">
@@ -44,9 +44,26 @@ We first visualise the spread of the PnL to understand the extent of tail risk a
 
 </div>
 
-The distribution deviates substantially from normality, exhibiting strong negative skew and excess kurtosis, reflecting the asymmetric tail risk. 
+The distribution deviates substantially from normality, evidenced by its negative skewness (−1.53) and excess kurtosis (2.30), indicating asymmetric downside risk and fat-tailed loss behaviour. 
+
+<div align="center">
+
+| Risk Metric | 95% Level | 99% Level |
+|------------|----------:|----------:|
+| Value-at-Risk (VaR) | -677.85 | -1025.91 |
+| Expected Shortfall (ES) | -938.38 | -1139.38 |
+
+</div>
+
+Given the VaR estimates, the strategy’s losses are not expected to exceed USD 677.85 and USD 1,025.91 at the 95% and 99% confidence levels, respectively. Of note, the VaR estimates are computed on a per-trade basis given the strategy's trading approach. With the ES estimates, we can expect an average losses of USD 938.38 and USD 1139.38 conditional on the losses exceeding the respective VaR thresholds.
+
+## Delta and Gamma Risks
+
+While VaR and ES provide a measure of the extent of the risk, they do not explain the underlying causes for it. In particular, for naked puts, these extreme losses are driven by systemic delta and gamma exposures that intensify during stress-conditions where the market moves sharply.
 
 
+
+This gives the motivation to incorporate appropriate risk management measures to hedge against the tail-risks, which could be larger than what is presented from our set of data, should extreme-case events occur.
 
 ### Fun Fact: The Signal Could Be Redundant:
 
