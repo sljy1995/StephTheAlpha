@@ -47,9 +47,15 @@ I try to be explicit about **limitations, risks, and assumptions**, not just res
 *Education*
 
 <div class="uni-logos">
-  <img src="/assets/img/University_of_Edinburgh-Logo.png" alt="University of Edinburgh">
-  <img src="/assets/img/University_of_Cambridge-Logo.png" alt="University of Cambridge">
-  <img src="/assets/img/National_University_of_Singapore_logo_NUS.png" alt="National University of Singapore">
+  <div class="logo-box">
+    <img src="/assets/img/University_of_Edinburgh-Logo.png" alt="University of Edinburgh">
+  </div>
+  <div class="logo-box">
+    <img src="/assets/img/University_of_Cambridge-Logo.png" alt="University of Cambridge">
+  </div>
+  <div class="logo-box">
+    <img src="/assets/img/National_University_of_Singapore_logo_NUS.png" alt="National University of Singapore">
+  </div>
 </div>
 
 I come from a quantitative background, with the following education:
