@@ -26,8 +26,6 @@ We first examine the empirical distribution of the PnL to assess the magnitude a
   
 </figure>
 
-<div align="center">
-
   <p align="center">
     <small><em><u>
       Table 1: Summary Statistics of PnL
@@ -46,7 +44,6 @@ We first examine the empirical distribution of the PnL to assess the magnitude a
 | Excess kurtosis | 2.30 |
 | Tail dominance (worst 5%) | 0.31 |
 
-</div>
 
 The distribution deviates substantially from normality, evidenced by its negative skewness (−1.53) and excess kurtosis (2.30), indicating asymmetric downside risk and fat-tailed loss behaviour. 
 
