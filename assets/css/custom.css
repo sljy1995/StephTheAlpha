@@ -285,6 +285,21 @@ article td:last-child,
   font-variant-numeric: tabular-nums;
 }
 
+/* Uni Logos */
+.uni-logos{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  margin: 24px 0;
+}
+
+.uni-logos img{
+  height: 70px;       /* control size here */
+  width: auto;
+  object-fit: contain;
+}
+
 /* Sidebar footer pinned bottom */
 .sidebar-footer{
   margin-top: auto;
