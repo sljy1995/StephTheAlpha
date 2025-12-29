@@ -98,7 +98,7 @@ $$
 So:
 
 $$
-dV = \Theta\ dt + \Delta\ dS + \frac{1}{2}\Gamma\(dS)^2
+dV = \Theta\ dt + \Delta\ dS + \frac{1}{2}\Gamma (dS)^2
 $$
 
 ### 2) Compute $(dS)^2$
