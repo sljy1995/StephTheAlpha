@@ -4,6 +4,8 @@ title: "Monetising Volatility Risk Premium for AAPL, Part II: Risk Analysis of t
 date: 2025-12-28
 excerpt: "We examine the risks associated with the naked put strategy developed in Part I to monetise VRP of AAPL using Ito's forumla to represent PnL in terms of relevant options Greeks. We observe negative skewness (−1.53) and excess kurtosis (2.30) in the distribution of the PnL. The Value-at-Risk (VaR) estimates at 95% and 99% CL are USD 677.85 and USD 1,025.91 respectively, while the corresponding Estimated Shortfalls (ES) are USD 938.38 and USD 1139.38. We assess that the tail risks stem primarily from exposure of short naked puts to delta and gamma risks."
 ---
+__All content here is for research and educational purposes only, not financial advice.__
+
 # Risk Analysis of a Naked Put Strategy with VRP>0 signal
 
 In the previous part, we examined how there is opportunity to monetise VRP of AAPL using a simple VRP>0 signal. The simplest approach to it was to trade short puts and exit at around the half-life (~ 4 days)of the VRP decay process. While this simple strategy was found to be profitable and regime-resilient, the residual risks had not been assessed. 
@@ -204,3 +206,4 @@ These risks give rise to the motivation to incorporate appropriate risk manageme
 
 In the next section, we will explore of these measures.
 
+*PS: GenAI was used to support the writing of this piece - but mostly for equation writing, cleaning up of markdown formatting, and language!*
