@@ -13,10 +13,12 @@ While intraday trends and monthly seasonality information on the EURUSD is widel
 
 In this article, we study the intraday trends of the EURUSD and compare it across the different trading days of the week to spot volatility regimes and daily seasonlity patterns.
 
-## EURUSD Background
+### EURUSD Background
 
 EURUSD indicates the amount of USD required to purchase one EUR. The EURUSD is the most traded currency pair globally, and has high liquidity, which enables tighter spreads as well as market depth. It first started trading in Jan 1999, when the EUR was introduced as the common currency for several European countries. 
 
+## Preparing the Dataset
 
+The 1-min EURUSD prices data across the range of 2024-2025 was obtained from Databento 
 
 *PS: GenAI was used to support the writing of this piece - but mostly for equation writing, cleaning up of markdown formatting, and language!)*
