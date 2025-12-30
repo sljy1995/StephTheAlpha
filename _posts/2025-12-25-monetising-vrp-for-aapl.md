@@ -8,7 +8,7 @@ __All content here is for research and educational purposes only, not financial 
 
 <figure>
   <p align="center">
-    <img src="/assets/img/aapl.png" alt="Apple Icon" width="600">
+    <img src="/assets/img/aapl.png" alt="Apple Icon" width="200">
   </p>
 </figure>
 
