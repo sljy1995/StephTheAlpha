@@ -6,6 +6,12 @@ excerpt: "The persistence of AAPL’s volatility risk premium was studied and  c
 ---
 __All content here is for research and educational purposes only, not financial advice.__
 
+<figure>
+  <p align="center">
+    <img src="/assets/img/aapl.png" alt="Apple Icon" width="600">
+  </p>
+</figure>
+
 # Monetising Volatility Risk Premium for AAPL 
 
 Volatility Risk Premium (VRP) refers to the difference between the Implied Volatility (IV), that is forward-looking and derived from option prices, and the Realised Volatility (RV) that is the actual variance that is realised over time (Feunou, 2017). A common observation is that IV is usually larger than RV, which indicates opportunity to capitalise on the premium from the difference between IV and RV, which is the VRP. 
