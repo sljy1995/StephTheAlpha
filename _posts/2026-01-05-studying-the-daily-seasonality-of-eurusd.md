@@ -7,6 +7,13 @@ excerpt: ""
 
 __All content here is for research and educational purposes only, not financial advice.__
 
+<figure>
+  <p align="center">
+    <img src="/assets/img/eurusd/EURUSD-logo.jpg" alt="EURUSD Logo from pipsmake.com" width="400">
+  </p>
+</figure>
+
+
 # Studying the EURUSD
 
 While intraday trends and monthly seasonality information on the EURUSD is widely available, it is worthwhile to understand the data better to see if there are intrinsic patterns that can be distilled for further studies to develop a trading strategy. 
