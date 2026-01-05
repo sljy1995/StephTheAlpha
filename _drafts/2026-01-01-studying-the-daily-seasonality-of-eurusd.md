@@ -165,4 +165,4 @@ We will explore such approaches in the next part!
 ### Citations
 ATFX. ‘Best Time to Trade EURUSD - Optimal Trading Hours Explained’. ATFX Global - Official Website, 28 August 2024. https://www.atfx.com/en/analysis/trading-strategies/best-time-to-trade-eurusd.
 
-*PS: GenAI was used to support the writing of this piece - but mostly for equation writing, cleaning up of markdown formatting, and language!)*
+*PS: GenAI was used to support the writing of this piece - but mostly for equation writing, cleaning up of markdown formatting, and language!*
