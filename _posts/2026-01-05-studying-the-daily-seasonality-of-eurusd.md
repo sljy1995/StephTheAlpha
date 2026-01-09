@@ -92,7 +92,7 @@ Now that we've analysed the returns across days of the week and within the days,
    </em></small>
   </p>
   <p align="center">
-    <img src="/assets/img/eurusd/intraday_vol.png" alt="Intraday Volatility (2025)" width="900">
+    <img src="/assets/img/eurusd/intraday_vol.png" alt="Intraday Volatility (2025)" width="1100">
   </p>
 </figure>
 
@@ -158,7 +158,7 @@ For intraday log returns, patterns are broadly similar across 2024 and 2025, wit
    </em></small>
   </p>
   <p align="center">
-    <img src="/assets/img/eurusd/intraday_vol_2024.png" alt="Intraday Volatility (2024)" width="900">
+    <img src="/assets/img/eurusd/intraday_vol_2024.png" alt="Intraday Volatility (2024)" width="1100">
   </p>
 </figure>
 
