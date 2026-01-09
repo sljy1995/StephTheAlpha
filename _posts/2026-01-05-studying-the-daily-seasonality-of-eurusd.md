@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Studying the Daily Seasonality of EURUSD"
+title: "Studying the EURUSD Part I: How Should we Trade it?"
 date: 2026-01-05
-excerpt: ""
+excerpt: "A simple study was conducted on the EURUSD using data from 2024 and 2025, the most traded currency globally, to identify intraday and days-of-the-week trends and insights to inform the approach to trade the EURUSD. It was found that Sundays are the most volatile, followed by Fridays. There are also clear and common intraday regimes where volatility levels are elevated in both years, driven by market activities. In both years, Fridays exhibit larger end-of-day movements in log returns, although the directions differ. The clear lack of directional trend coupled with clearly defined high volatility regions indicate that there is limited scope for directional trading strategies, therefore giving motivation for focus on volatility-based approaches instead."
 ---
 
 __All content here is for research and educational purposes only, not financial advice.__
@@ -26,8 +26,9 @@ EURUSD indicates the amount of USD required to purchase one EUR. The EURUSD is t
 
 ## Preparing the Dataset
 
-The 1-min EURUSD prices data across the range of 2024-2025 was obtained from Massive. We will use 2025’s data for analysis and conduct back tests on 2024 data.
-The dataset is cleaned for duplicates and made to be time zone-aware, specifically with UTC time zone. It is also observed that there are missing data in the magnitudes of ~1-3, which is taken as omitted data due to low liquidity. After cleaning up, we have a total of 364,053 minutes worth of data for the year of 2025 that will be used for analysis. 
+The 1-min EURUSD prices data across the range of 2024-2025 was obtained from Massive.
+
+The dataset is cleaned for duplicates and made to be time zone-aware, specifically with UTC time zone. It is also observed that there are missing data in the magnitudes of ~3-10 each day, which is taken as omitted data due to low liquidity. After cleaning up, we have a total of 369,833 minutes and 364,053 minutes worth of data for 2024 and 2025 respectively that will be used for analysis. 
 
 ## Analysis of EURUSD in 2025
 
@@ -161,11 +162,11 @@ For intraday log returns, patterns are broadly similar across 2024 and 2025, wit
   </p>
 </figure>
 
-Intraday volatility in 2024 displays similar high-volatility regions to 2025, notably during 0600–0900 and 1200–1500. However, unlike 2025 where volatility peaks at 2100 hours on Fridays, 2024 shows elevated volatility at 2100 hours on Thursdays instead.
+Intraday volatility in 2024 displays similar high-volatility regions to 2025, notably during 0600–0900 and 1200–1500. However, unlike 2025 where volatility peaks at 2100hrs on Fridays, 2024 shows elevated volatility at 2100hrs on Thursdays instead.
 
 ## What Then for Trading EURUSD?
 
-The clear lack of directional trend coupled with clearly defined high volatility regions indicate that there is limited scope for directional trading strategies. Instead, we should focus on volatility-based approaches and incorporate measures to mitigate convexity and tail risk. 
+The clear lack of directional trend coupled with clearly defined high volatility regions indicate that there is limited scope for directional trading strategies. Instead, we should focus on volatility-based approaches and incorporate measures to mitigate convexity and tail risk. Of note though, the analysis was done only with 2024-2025 data and may present limitations given the lack of depth in data across time. 
 
 We will explore such approaches in the next part!
 
