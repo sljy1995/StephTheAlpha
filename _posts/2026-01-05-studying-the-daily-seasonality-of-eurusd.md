@@ -75,7 +75,7 @@ We move on to look at the intraday log returns.
    </em></small>
   </p>
   <p align="center">
-    <img src="/assets/img/eurusd/intraday_ret.png" alt="Intraday Log Returns for 2025" width="900">
+    <img src="/assets/img/eurusd/intraday_ret.png" alt="Intraday Log Returns for 2025" width="1100">
   </p>
 </figure>
 
