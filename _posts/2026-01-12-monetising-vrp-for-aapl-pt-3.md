@@ -53,6 +53,12 @@ This term dominates during large market moves and generates tail-risk in naked s
 ## Performance of Put Spreads Across Long Put Deltas
 
 We study the performance of put spreads across the range of long put deltas from -0.30 to -0.10 inclusive. 
+  
+  <p align="center">
+    <small><em><u>
+      Table 1: Summary Statistics of Different Hedge Deltas
+    </u></em></small>
+  </p>
 
 | Strategy | Hedge Delta | Trades | Mean PnL | Std Dev | Skew | VaR 99% | ES 99% | Worst Loss | Total PnL |
 |---------|------------:|-------:|---------:|--------:|-----:|--------:|-------:|-----------:|----------:|
@@ -90,15 +96,20 @@ where:
 $$
 \text{Sharpe}_{\text{ROC}} = \frac{\text{ROC} - r_f} {\sigma}
 $$
+  <p align="center">
+    <small><em><u>
+      Table 2: Sharpe Ratio for Different Hedge Deltas
+    </u></em></small>
+  </p>
+| Strategy                | Delta | Sharpe Ratio (rf = 3%) |
+|-------------------------|-------|------------------------|
+| Long Put (Put Spread)   | -0.15 | 0.1380                 |
+| Long Put (Put Spread)   | -0.20 | 0.1388                 |
+| Long Put (Put Spread)   | -0.25 | 0.1626                 |
+| Naked Put               |  —    | 0.0622                 |
 
-| Strategy    | Delta | Sharpe Ratio (rf = 3%) |
-|------------|-------|------------------------|
-| Long Put   | -0.20 | 0.1388                 |
-| Long Put   | -0.15 | 0.1380                 |
-| Long Put   | -0.25 | 0.1626                 |
-| Naked Put  |  —    | 0.0622                 |
 
-Among the long put configurations considered, _−0.25 delta_ presents as the choice with highest risk-adjusted performance as measured by the Sharpe ratio. 
+Among the long put configurations considered, **−0.25 delta** presents as the choice with highest risk-adjusted performance as measured by the Sharpe ratio. 
 
 ## Conclusion
 
