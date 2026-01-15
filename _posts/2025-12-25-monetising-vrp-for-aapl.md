@@ -274,7 +274,7 @@ Assuming a starting capital of USD50,000, suitable for an entry/intermediate ret
   <tbody>
     <tr>
       <td>Sharpe ratio</td>
-      <td>1.6452</td>
+      <td>0.0622</td>
     </tr>
     <tr>
       <td>Kelly fraction</td>
@@ -283,7 +283,7 @@ Assuming a starting capital of USD50,000, suitable for an entry/intermediate ret
   </tbody>
 </table>
 
-The Sharpe ratio indicates **attractive risk-adjusted returns**, while the Kelly fraction provides a theoretical upper bound on capital allocation under the assumption of stable return distributions. 
+The Sharpe ratio indicates **weak risk-adjusted performance**, while the Kelly fraction provides a theoretical upper bound on capital allocation under the assumption of stable return distributions. 
 
 ## Testing for Regime-resilience
 
@@ -300,7 +300,7 @@ A truly useful strategy is one that stands the test of time and events. So we pu
   </p>
 </figure>
 
-A total number of 256 trades were executed over 1 Jan 2018 to 31 May 2022 (4.5 years), with a **total PnL of USD17,107.50** generated. The **max drawdown is USD5,635.50** and corresponding **Calmar ratio is 3.0357**. The strategy has a **Sharpe ratio of 2.3719** and a **Kelly fraction of 0.2512**. This also indicates the likelihood that the strategy can still reap profits amidst elevated uncertainty.
+A total number of 256 trades were executed over 1 Jan 2018 to 31 May 2022 (4.5 years), with a **total PnL of USD17,107.50** generated. The **max drawdown is USD5,635.50** and corresponding **Calmar ratio is 3.0357**. This also indicates the likelihood that the strategy can still reap profits amidst elevated uncertainty.
 
 ## Conclusion
 
@@ -314,3 +314,25 @@ I will explain the risks of this strategy, and consider appropriate risk managem
 Feunou, B., Lopez Aliouchkin, R., Tédongap, R., & Xi, L. (2017). Variance premium, downside risk and expected stock returns (No. 2017-58). Bank of Canada. 
 
 *PS: GenAI was used to support the writing of this piece - but mostly for equation writing, cleaning up of markdown formatting, and language!)*
+
+##### Sharpe Ratio Calculation Method
+
+#### Risk-on-Capital (ROC) Sharpe Ratio Comparisons
+
+We used the ROC method to compute the Sharpe ratio, where the Capital at Risk is defined as the maximum downside exposure at trade entry, which is 
+
+$$
+\text{Capital at Risk}_i \=\ K_i - S_i + P_i
+$$
+
+$$
+\text{ROC}_i \=\ \frac{\text{PnL}_i}{\text{CaR}_i}
+$$
+
+where:
+- $\text{PnL}_i$ is the realised profit or loss of trade $i$ (per share),
+- $\text{CaR}_i$ is the capital at risk of trade $i$ at entry.
+
+$$
+\text{Sharpe}_{\text{ROC}} = \frac{\text{ROC} - r_f} {\sigma}
+$$
