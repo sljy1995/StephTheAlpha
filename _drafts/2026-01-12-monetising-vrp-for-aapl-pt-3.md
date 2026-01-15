@@ -70,3 +70,37 @@ We observe that all deltas were effective in improving the tail-risk magnitude, 
 
 #### Volatility of PnL
 There is a clear monotonic trend, where the standard deviation of PnLs reduce as the (absolute) hedge delta increases. This is consistent with the greeks-based interpretation above where we decomposed how the put spread's gamma is reduced with the long put offsetting as its strike price gets closer to ATM (or as absolute hedge delta increases). 
+
+#### Risk-on-Capital (ROC) Sharpe Ratio Comparisons
+
+We use the ROC method to compute the Sharpe ratio, where the Capital at Risk is defined as the maximum downside exposure at trade entry, which is 
+
+$$
+\text{Capital at Risk}_i \=\ K_i - S_i + P_i
+$$
+
+$$
+\text{ROC}_i \=\ \frac{\text{PnL}_i}{\text{CaR}_i}
+$$
+
+where:
+- $\text{PnL}_i$ is the realised profit or loss of trade $i$ (per share),
+- $\text{CaR}_i$ is the capital at risk of trade $i$ at entry.
+
+$$
+\text{Sharpe}_{\text{ROC}} = \frac{\text{ROC} - r_f} {\sigma}
+$$
+
+| Strategy    | Delta | Sharpe Ratio (rf = 3%) |
+|------------|-------|------------------------|
+| Long Put   | -0.20 | 0.1388                 |
+| Long Put   | -0.15 | 0.1380                 |
+| Long Put   | -0.25 | 0.1626                 |
+| Naked Put  |  —    | 0.0622                 |
+
+Among the long put configurations considered, _−0.25 delta_ presents as the choice with highest risk-adjusted performance as measured by the Sharpe ratio. 
+
+## Conclusion
+
+This study demonstrates that a pure naked put strategy can serve as a baseline approach for monetising VRP through trading AAPL options, but it is accompanied by pronounced downside tail risk driven by delta and gamma exposures. Through an examination the associated risks, we show that incorporating a long put effectively attenuates these tail risks. Among the configurations considered, a −0.25 delta long put provides the most favourable trade-off, offering meaningful dampening of extreme downside outcomes while preserving the ability to monetise VRP.
+
