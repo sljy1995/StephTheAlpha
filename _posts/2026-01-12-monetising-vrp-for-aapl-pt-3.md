@@ -2,6 +2,7 @@
 layout: default
 title: "Monetising Volatility Risk Premium for AAPL, Part III: Hedging with a Put Spread"
 date: 2026-01-12
+excerpt:"We studied how a put spread helps preserve exposure to VRP monetisation while capping downside risk by dampening gamma-driven convexity, and examined how the PnL distribution is altered from a naked put. In particular, we derived that a long put with a -0.25 delta presented the optimal risk-adjusted performance, as shown by a reduction in risk-related metrics, and an increase by ~300% in the Sharpe ratio."
 ---
 <figure>
   <p align="center">
