@@ -61,14 +61,15 @@ We study the performance of put spreads across the range of long put deltas from
     </u></em></small>
   </p>
 
-| Strategy | Hedge Delta | Trades | Mean PnL | Std Dev | Skew | VaR 99% | ES 99% | Worst Loss | Total PnL |
-|---------|------------:|-------:|---------:|--------:|-----:|--------:|-------:|-----------:|----------:|
-| Naked Put | — | 341 | 40.45 | 332.92 | -1.53 | -1025.91 | -1139.38 | -1315.00 | 13,792 |
-| Put Spread | -0.10 | 64 | 53.17 | 304.60 | -1.39 | -822.31 | -870.50 | -870.50 | 3,403 |
-| Put Spread | -0.15 | 150 | 32.50 | 286.52 | -1.42 | -879.67 | -958.75 | -968.50 | 4,875 |
-| Put Spread | -0.20 | 150 | 29.56 | 261.86 | -1.50 | -820.42 | -888.75 | -949.00 | 4,434 |
-| Put Spread | -0.25 | 147 | 29.24 | 234.87 | -1.56 | -757.70 | -896.25 | -940.50 | 4,298.5 |
-| Put Spread | -0.30 | 87 | 44.32 | 210.06 | -1.82 | -543.61 | -940.50 | -940.50 | 3,855.5 |
+| Strategy    | Hedge Delta | Trades | Mean PnL | Std Dev | Skew | VaR 99% | ES 99%  | Worst Loss | Total PnL |
+|-------------|-------------|--------|----------|---------|------|---------|---------|------------|-----------|
+| Naked Put   | —           | 341    | 40.45    | 332.92  | -1.53| -1,025.91 | -1,139.38 | -1,315.00  | 13,792.0  |
+| Put Spread  | -0.10       | 64     | 53.17    | 304.60  | -1.39|   -822.31 |   -870.50 |   -870.50  | 3,403.0   |
+| Put Spread  | -0.15       | 150    | 32.50    | 286.52  | -1.42|   -879.67 |   -958.75 |   -968.50  | 4,875.0   |
+| Put Spread  | -0.20       | 150    | 29.56    | 261.86  | -1.50|   -820.42 |   -888.75 |   -949.00  | 4,434.0   |
+| Put Spread  | -0.25       | 147    | 29.24    | 234.87  | -1.56|   -757.70 |   -896.25 |   -940.50  | 4,298.5   |
+| Put Spread  | -0.30       | 87     | 44.32    | 210.06  | -1.82|   -543.61 |   -940.50 |   -940.50  | 3,855.5   |
+
 
 We note that the number of trades for deltas -0.10 and -0.30 are based on substantially smaller sample sizes (<100) and therefore provide less reliable estimates of the distribution, so we drop them to only study the reliable regions with ~150 trades.
 
