@@ -84,12 +84,12 @@ There is a clear monotonic trend, where the standard deviation of PnLs reduce as
       Table 2: Sharpe Ratio for Different Hedge Deltas
     </u></em></small>
   </p>
-| Strategy                | Delta | Sharpe Ratio (rf = 3%) |
-|-------------------------|-------|------------------------|
-| Long Put (Put Spread)   | -0.15 | 0.1380                 |
-| Long Put (Put Spread)   | -0.20 | 0.1388                 |
-| Long Put (Put Spread)   | -0.25 | 0.1626                 |
-| Naked Put               |  —    | 0.0622                 |
+| Strategy              | Delta | Sharpe Ratio (rf = 3%) |
+|-----------------------|-------|------------------------|
+| Put Spread (Long Put) | -0.15 | 0.1380                 |
+| Put Spread (Long Put) | -0.20 | 0.1388                 |
+| Put Spread (Long Put) | -0.25 | 0.1626                 |
+| Naked Put             | —     | 0.0622                 |
 
 
 Among the long put configurations considered, **−0.25 delta** presents as the choice with highest risk-adjusted performance as measured by the Sharpe ratio. 
