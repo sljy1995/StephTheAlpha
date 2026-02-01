@@ -13,17 +13,17 @@ Cryptocurrency, because of its 24/7 continuous trading nature, presents differen
 
 ## Statistical Analysis of BTCUSDT
 
-From Binance, we obtained tick-level BTCUSDT spot trades from 17 Aug 2017 to 28 Jan 2026 with microsecond timestamp resolution, and aggregated them into one-minute intervals to analyse 1-min log-returns and 5-min log-volatility analysis. 
+From Binance, we obtained tick-level BTCUSDT spot trades from 17 Aug 2017 to 28 Jan 2026 with microsecond timestamp resolution, and aggregated them into one-minute intervals to analyse 1-min log-returns and 5-min log Realised Volatility (RV) analysis. 
 
 ### Data Summary
   
 <p align="center">
   <small><em><u>
-    Table 1: Summary Statistics of 1-min Log Returns and 5-min Annualised Log Realised Volatility.
+    Table 1: Summary Statistics of 1-min Log Returns and 5-min Annualised Log RV.
   </u></em></small>
 </p>
 
-| Metric        | Log Returns (1-min) | Log Realised Volatility (5-min, Ann.) |
+| Metric        | Log Returns (1-min) | Log RV (5-min, Ann.) |
 |--------------|--------------------:|--------------------------------------:|
 | Sample size  | 4,412,544           | 4,412,540                             |
 | Mean         | 6.89e-07            | −1.008                                |
@@ -34,46 +34,62 @@ From Binance, we obtained tick-level BTCUSDT spot trades from 17 Aug 2017 to 28 
 | 75%          | 3.35e-04            | −0.457                                |
 | Maximum      | 0.0723              | 3.817                                 |
 
-From the summary statistics, it can be seen that 1-min log returns exhibit a mean of approximately 0, as well as negligible unconditional drift and heavy tails. The 5-min realised volatility displays a wide dynamic range corresponding to distinct volatility regimes, with extremely low value reflecting period of minimal trading activity, and an upper tail corresponding to high-volatility regimes.
+<figure>
+    <p align="center">
+    <small><em>
+      <u>Figure 1: Distribution Graphs of Log-returns, RV (5min, annualised), and Log RV (5min, annualised).</u>
+   </em></small>
+  </p>
+  <p align="center">
+    <img src="/assets/img/btcusdt/logret_rv_logrv_plots.png" alt="Graphs of Log-ret, RV_5min, Log RV_5min" width="600">
+  </p>
 
-## HAR Model Estimation Results
+From the summary statistics, it can be seen that 1-min log returns exhibit a mean of approximately 0, as well as negligible unconditional drift and heavy tails. The 5-min RV displays a wide dynamic range corresponding to distinct volatility regimes, with extremely low value reflecting period of minimal trading activity, and an upper tail corresponding to high-volatility regimes.
 
-**Dependent variable:** Future log realised volatility  
+### HAR Model Estimation Results
+
+We specify a heterogeneous autoregressive (HAR) model to analyse how RV at multiple horizons contributes to forecasting five-minute RV at t + 5min. The dataset was split into training and testing samples using a 80-20 split, with the model parameters estimated on the training set. From figure 1, we can see that there is a need to use Log-transformed RV instead to stabilise regression estimates by dampening the influence of extreme RV spikes on Ordinary Least Squares (OLS) estimation. 
+
+**Dependent variable:** $\log(\mathrm{RV}_{5\text{min}}^{\text{ann}})$ at $t+5\text{ min}$
+
 **Number of observations:** 3,528,880  
 
-### Regression Coefficients
+#### Regression Coefficients, Model Fit, and Residual Diagnostics
 
-| Variable            | Coefficient | Std. Error | t-stat | p-value |
-|---------------------|-------------|------------|--------|---------|
-| Intercept           | -0.2196     | 0.001      | -413.8 | < 0.001 |
-| log_rv_5m_ann       | 0.2169      | 0.001      | 396.9  | < 0.001 |
-| log_rv_60m_ann      | 0.5738      | 0.001      | 549.6  | < 0.001 |
-| log_rv_1440m_ann    | 0.1974      | 0.001      | 180.5  | < 0.001 |
+<p align="center">
+  <small><em><u>
+    Table 2: Regression Coefficients of HAR Model.
+  </u></em></small>
+</p>
 
-### Model Fit
+| Variable / Statistic | Coefficient | Std. Error | t-stat | p-value |
+|---------------------|------------:|-----------:|-------:|--------:|
+| **HAR Regression Coefficients** | | | | |
+| Intercept | -0.2196 | 0.001 | -413.8 | < 0.001 |
+| $\log(\mathrm{RV}_{5\text{min}}^{\text{ann}})$ | 0.2169 | 0.001 | 396.9 | < 0.001 |
+| $\log(\mathrm{RV}_{60\text{min}}^{\text{ann}})$ | 0.5738 | 0.001 | 549.6 | < 0.001 |
+| $\log(\mathrm{RV}_{1440\text{min}}^{\text{ann}})$ | 0.1974 | 0.001 | 180.5 | < 0.001 |
+| | | | | |
+| **Residual Diagnostics** | | | | |
+| Skewness | −7.386 | — | — | — |
+| Kurtosis | 171.889 | — | — | — |
+| Jarque–Bera | 4.23 × 10⁹ | — | — | < 0.001 |
+| | | | | |
+| **Model Fit Statistics** | | | | |
+| R² | 0.496 | — | — | — |
+| Adjusted R² | 0.496 | — | — | — |
+| F-statistic | 1.16 × 10⁶ | — | — | < 0.001 |
+| Durbin–Watson | 0.517 | — | — | — |
 
-- R²: 0.496  
-- Adjusted R²: 0.496  
-- F-statistic: 1.16 × 10⁶ (p < 0.001)  
-- Durbin–Watson: 0.517  
+The model explains a substantial extent of the forecasted RV_5min_annualised, as reflected in the R² value of 0.496. From the coefficients, it can be seen that the medium-horizon (1-hr) log RV dominates forecast dynamics with the largest coefficient of 0.5738. Nonetheless, the short and long-term horizons also contribute meaningfully. The coefficients are also highly statistically significant (all p-values < 0.001). 
 
-From the coefficients, it can be seen that the medium-horizon (1-hr) log RV dominates forecast dynamics with the largest coefficient of 0.5738. Nonetheless, the short and long-term horizons also contribute meaningfully. The coefficients are also highly statistically significant (all p-values < 0.001). 
-
-Of note, the Durbin-Watson statistic (0.517) is < 2, indicating substantial residual autocorrelation that may not be well captured by the model, and may warrant further analysis and model extensions.
-
----
-
-## Residual Diagnostics
-
-- Skewness: -7.386  
-- Kurtosis: 171.889  
-- Jarque–Bera: 4.23 × 10⁹ (p < 0.001)  
+Of note, the Durbin-Watson statistic (0.517) is < 2, indicating substantial residual autocorrelation that may not be well captured by the model, and may warrant further analysis and model extensions to refine the HAR model.
 
 Residuals exhibit extreme non-normality, reflecting jump risk and volatility clustering inherent in high-frequency crypto markets.
 
 ---
 
-## Out-of-Sample Forecast Performance
+## Test Sample Forecast Performance
 
 - RMSE: 0.733  
 - MAE: 0.420  
