@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Modelling BTCUSDT to Investigate Alphas - Part I: Forecasting BTCUSDT Volatility with a Heterogenous Autoregressive Model"
-date: 2026-02-03
+date: 2026-02-02
 excerpt: "We used the 5 min, 1 hr, and 1 day realised volatilities (RV)  as coefficients to the Heterogenous Autoregressive (HAR) model to study the feasibility of forecasting RV at t + 5mins. While there was substantial residual autocorrelation observed that requires further treatment through model extensions, the HAR model was assessed to produce statistically superior results when compared to a naïve benchmark, reducing errors by ~20%."
 ---
 __All content here is for research and educational purposes only, not financial advice.__
