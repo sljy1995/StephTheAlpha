@@ -23,16 +23,24 @@ From Binance, we obtained tick-level BTCUSDT spot trades from 17 Aug 2017 to 28 
   </u></em></small>
 </p>
 
-| Metric        | Log Returns (1-min) | Log RV (5-min, Ann.) |
-|--------------|--------------------:|--------------------------------------:|
-| Sample size  | 4,412,544           | 4,412,540                             |
-| Mean         | 6.89e-07            | −1.008                                |
-| Std. dev.    | 1.15e-03            | 0.985                                 |
-| Minimum      | −0.0751             | −18.421                               |
-| 25%          | −3.34e-04           | −1.518                                |
-| Median       | 0.0000              | −0.990                                |
-| 75%          | 3.35e-04            | −0.457                                |
-| Maximum      | 0.0723              | 3.817                                 |
+| Variable / Statistic | Coefficient | Std. Error | $t$-stat | $p$-value |
+| :--- | :---: | :---: | :---: | :---: |
+| **HAR Regression (Log)** | | | | |
+| Intercept | $-0.2196$ | $0.001$ | $-413.8$ | $< 0.001$ |
+| $\log(\text{RV}_{t}^{(5\text{min, ann})})$ | $0.2169$ | $0.001$ | $396.9$ | $< 0.001$ |
+| $\log(\text{RV}_{t}^{(60\text{min, ann})})$ | $0.5738$ | $0.001$ | $549.6$ | $< 0.001$ |
+| $\log(\text{RV}_{t}^{(1\text{day, ann})})$ | $0.1974$ | $0.001$ | $180.5$ | $< 0.001$ |
+| | | | | |
+| **Residual Diagnostics** | | | | |
+| Skewness | $-7.386$ | — | — | — |
+| Kurtosis | $171.889$ | — | — | — |
+| Jarque–Bera | $4.23 \times 10^{9}$ | — | — | $< 0.001$ |
+| | | | | |
+| **Model Fit Statistics** | | | | |
+| $R^2$ | $0.496$ | — | — | — |
+| Adjusted $R^2$ | $0.496$ | — | — | — |
+| $F$-statistic | $1.16 \times 10^{6}$ | — | — | $< 0.001$ |
+| Durbin–Watson | $0.517$ | — | — | — |
 
 <figure>
     <p align="center">
