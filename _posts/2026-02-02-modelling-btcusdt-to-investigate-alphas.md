@@ -23,6 +23,8 @@ From Binance, we obtained tick-level BTCUSDT spot trades from 17 Aug 2017 to 28 
   </u></em></small>
 </p>
 
+<div style="overflow-x: auto;">
+
 | Variable / Statistic | Coeff | Std. Error | $t$-stat | $p$-value |
 | :--- | :---: | :---: | :---: | :---: |
 | **HAR (Log)** | | | | |
@@ -39,6 +41,8 @@ From Binance, we obtained tick-level BTCUSDT spot trades from 17 Aug 2017 to 28 
 | Adj. $R^2$ | $0.496$ | — | — | — |
 | $F$-stat | $1.16e6$ | — | — | $< 0.001$ |
 | Durbin-W | $0.517$ | — | — | — |
+
+</div>
 
 <figure>
     <p align="center">
