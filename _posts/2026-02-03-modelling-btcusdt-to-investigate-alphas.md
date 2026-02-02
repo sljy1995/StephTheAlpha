@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Modelling BTCUSDT to Investigate Alphas - Part I: Analysing BTCUSDT Volatility"
-date: 2026-02-04
-excerpt: ""
+title: "Modelling BTCUSDT to Investigate Alphas - Part I: Forecasting BTCUSDT Volatility with a Heterogenous Autoregressive Model"
+date: 2026-02-03
+excerpt: "We used the 5 min, 1 hr, and 1 day realised volatilities (RV)  as coefficients to the Heterogenous Autoregressive (HAR) model to study the feasibility of forecasting RV at t + 5mins. While there was substantial residual autocorrelation observed that requires further treatment through model extensions, the HAR model was assessed to produce statistically superior results when compared to a naïve benchmark, reducing errors by ~20%."
 ---
 __All content here is for research and educational purposes only, not financial advice.__
 
@@ -46,11 +46,17 @@ From Binance, we obtained tick-level BTCUSDT spot trades from 17 Aug 2017 to 28 
 
 From the summary statistics, it can be seen that 1-min log returns exhibit a mean of approximately 0, as well as negligible unconditional drift and heavy tails. The 5-min RV displays a wide dynamic range corresponding to distinct volatility regimes, with extremely low value reflecting period of minimal trading activity, and an upper tail corresponding to high-volatility regimes.
 
+With reference to figure 1, we can see that the RV is heavily right-skewed, indicating a majority of low-RV periods but episodic occurances of high-volatility spikes, which is expected of BTC market activity. With log transformation, we are able to reduce the skewness substantially to produce a more symmetrical, bell-shaped curve, which will facilitate modelling subsequently.
+
 ### HAR Model Estimation Results
 
-We specify a heterogeneous autoregressive (HAR) model to analyse how RV at multiple horizons contributes to forecasting five-minute RV at t + 5min. The dataset was split into training and testing samples using a 80-20 split, with the model parameters estimated on the training set. From figure 1, we can see that there is a need to use Log-transformed RV instead to stabilise regression estimates by dampening the influence of extreme RV spikes on Ordinary Least Squares (OLS) estimation. 
+We specify a heterogeneous autoregressive (HAR) model to analyse how RV at multiple horizons contributes to forecasting five-minute RV at t + 5min.
 
-**Dependent variable:** $\log(\mathrm{RV}_{5\text{min}}^{\text{ann}})$ at $t+5\text{ min}$
+$$\text{RV}_{t+5}^{(5\text{min, ann})} = \beta_0 + \beta_{5min} \text{RV}_{t}^{(5\text{min, ann})} + \beta_{60min} \text{RV}_{t}^{(60\text{min, ann})} + \beta_{1d} \text{RV}_{t}^{(1\text{day, ann})} + \epsilon_{t+5}$$
+
+The dataset was split into training and testing samples using a 80-20 split, with the model parameters estimated on the training set. From figure 1, we can see that there is a need to use Log-transformed RV instead to stabilise regression estimates by dampening the influence of extreme RV spikes on Ordinary Least Squares (OLS) estimation. 
+
+**Dependent variable:** $\log(\text{RV}_{t+5}^{(5\text{min, ann})})$
 
 **Number of observations:** 3,528,880  
 
@@ -66,9 +72,9 @@ We specify a heterogeneous autoregressive (HAR) model to analyse how RV at multi
 |---------------------|------------:|-----------:|-------:|--------:|
 | **HAR Regression Coefficients** | | | | |
 | Intercept | -0.2196 | 0.001 | -413.8 | < 0.001 |
-| $\log(\mathrm{RV}_{5\text{min}}^{\text{ann}})$ | 0.2169 | 0.001 | 396.9 | < 0.001 |
-| $\log(\mathrm{RV}_{60\text{min}}^{\text{ann}})$ | 0.5738 | 0.001 | 549.6 | < 0.001 |
-| $\log(\mathrm{RV}_{1440\text{min}}^{\text{ann}})$ | 0.1974 | 0.001 | 180.5 | < 0.001 |
+| $\log(\text{RV}_{t}^{(5\text{min, ann})})$ | 0.2169 | 0.001 | 396.9 | < 0.001 |
+| $\log(\text{RV}_{t}^{(60\text{min, ann})})$ | 0.5738 | 0.001 | 549.6 | < 0.001 |
+| $\log(\text{RV}_{t}^{(1\text{day, ann})})$ | 0.1974 | 0.001 | 180.5 | < 0.001 |
 | | | | | |
 | **Residual Diagnostics** | | | | |
 | Skewness | −7.386 | — | — | — |
@@ -81,33 +87,44 @@ We specify a heterogeneous autoregressive (HAR) model to analyse how RV at multi
 | F-statistic | 1.16 × 10⁶ | — | — | < 0.001 |
 | Durbin–Watson | 0.517 | — | — | — |
 
-The model explains a substantial extent of the forecasted RV_5min_annualised, as reflected in the R² value of 0.496. From the coefficients, it can be seen that the medium-horizon (1-hr) log RV dominates forecast dynamics with the largest coefficient of 0.5738. Nonetheless, the short and long-term horizons also contribute meaningfully. The coefficients are also highly statistically significant (all p-values < 0.001). 
+The model explains a substantial extent of the forecasted $\widehat{\text{RV}}_{t+5}^{(5\text{min, ann})}$, as reflected in the R² value of 0.496. From the coefficients, it can be seen that the medium-horizon $\log(\text{RV}_{t}^{(60\text{min, ann})})$ dominates forecast dynamics with the largest coefficient of 0.5738. Nonetheless, the short and long-term horizons also contribute meaningfully. The coefficients are also highly statistically significant (all p-values < 0.001). 
 
 Of note, the Durbin-Watson statistic (0.517) is < 2, indicating substantial residual autocorrelation that may not be well captured by the model, and may warrant further analysis and model extensions to refine the HAR model.
 
 Residuals exhibit extreme non-normality, reflecting jump risk and volatility clustering inherent in high-frequency crypto markets.
 
----
+### Model Performance on Test Sample
 
-## Test Sample Forecast Performance
+Out-of-sample (n = 882,220) forecast performance is evaluated using root mean squared error (RMSE) and mean absolute error (MAE).
 
-- RMSE: 0.733  
-- MAE: 0.420  
-- MSE: 0.537  
+#### Test Sample Forecast Performance
 
-### Relative Error Metrics
+<p align="center">
+  <small><em><u>
+    Table 3: Absolute and Relative Error Metrics .
+  </u></em></small>
+</p>
 
-- Relative RMSE: 0.554  
-- Relative MAE: 0.318  
+| Metric | Value |
+|--------|------:|
+| Root Mean Squared Error (RMSE) | 0.733 |
+| Mean Absolute Error (MAE) | 0.420 |
+| Relative RMSE | 0.791 |
+| Relative MAE | 0.789 |
 
-The HAR model reduces forecast error by approximately 45% relative to a naive benchmark.
+It can be seen from the RMSE that large forecast errors exist, resulting in RMSE > MAE. The relative RMSE and MAE show that the model outperforms a naive benchmark, proving that the HAR model provides improved performance in capturing the volatility dynamics of BTCUSDT. The error metrics are then compared to that of a naïve benchmark:
 
+$$\widehat{\text{RV}}_{t+5}^{(5\text{min, ann})} = \text{RV}_{t}^{(5\text{min, ann})}$$ 
 
-Residual diagnostics indicate strong short-run autocorrelation and pronounced conditional heteroskedasticity. We therefore augment the HAR mean equation with an AR(1) component and model the resulting innovations using a GARCH(1,1) specification with Student-t innovations. The estimated degrees of freedom indicate extremely heavy tails, consistent with high-frequency crypto market dynamics.
+Comparatively, it is notable that the relative RMSE and MAE show that the HAR model can reduce RV forecasting errors by ~20%.
 
+## Conclusion
 
+We find that a HAR model utilising realised volatility horizons at the 5-min, 1-hour, and 1-day levels provides a statistically meaningful approach to forecasting $\widehat{\text{RV}}_{t+5}^{(5\text{min, ann})}$, with performance superior to that of a naïve persistence benchmark.
+
+In the next stage of this study, we will address the residual autocorrelation through further model extensions to improve our forecast accuracy, before progressing to a deeper analysis of how these volatility forecasts may be translated into monetisable trading opportunities.
 
 ## Citations
 Wainwright, Zack. ‘A Closer Look at Bitcoin’s Volatility’. Accessed 1 February 2026. https://www.fidelitydigitalassets.com/research-and-insights/closer-look-bitcoins-volatility.
 
-
+*PS: GenAI was used to support the writing of this piece - but mostly for equation writing, cleaning up of markdown formatting, and language!*
