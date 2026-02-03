@@ -34,15 +34,16 @@ From Binance, we obtained tick-level BTCUSDT spot trades from 17 Aug 2017 to 28 
 | 75% | 3.353473e-04 | 6.333433e-01 | -4.567426e-01 |
 | Max | 7.229275e-02 | 4.544996e+01 | 3.816612e+00 |
 
-<figure>
     <p align="center">
     <small><em>
       <u>Figure 1: Distribution Graphs of Log-returns, RV (5min, annualised), and Log RV (5min, annualised).</u>
    </em></small>
   </p>
+<figure>
   <p align="center">
     <img src="/assets/img/btcusdt/logret_rv_logrv_plots.png" alt="Graphs of Log-ret, RV_5min, Log RV_5min" width="600">
   </p>
+</figure>
 
 From the summary statistics, it can be seen that 1-min log returns exhibit a mean of approximately 0, as well as negligible unconditional drift and heavy tails. The 5-min RV displays a wide dynamic range corresponding to distinct volatility regimes, with extremely low value reflecting period of minimal trading activity, and an upper tail corresponding to high-volatility regimes.
 
