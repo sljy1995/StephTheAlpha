@@ -69,21 +69,21 @@ The dataset was split into training and testing samples using a 80-20 split, wit
 </p>
 
 | Variable | Coefficient | Std. Error | $t$-stat | $p$-value |
-|:---|:---:|:---:|:---:|:---:|
+|------|------:|------:|------:|------:|
 | Intercept | $-0.2196$ | $0.001$ | $-413.8$ | $< 0.001$ |
 | $\log(\mathrm{RV}_{t}^{(5\text{min, ann})})$ | $0.2169$ | $0.001$ | $396.9$ | $< 0.001$ |
 | $\log(\mathrm{RV}_{t}^{(60\text{min, ann})})$ | $0.5738$ | $0.001$ | $549.6$ | $< 0.001$ |
 | $\log(\mathrm{RV}_{t}^{(1\text{day, ann})})$ | $0.1974$ | $0.001$ | $180.5$ | $< 0.001$ |
 
 | Statistic | Value |
-|:---|---:|
+|------|------:|
 | Skewness | $-7.386$ |
 | Kurtosis | $171.889$ |
 | Jarque–Bera | $4.23 \times 10^{9}$ |
 | $p$-value | $< 0.001$ |
 
 | Metric | Value |
-|:---|---:|
+|------|------:|
 | $R^2$ | $0.496$ |
 | Adjusted $R^2$ | $0.496$ |
 | $F$-statistic | $1.16 \times 10^{6}$ |
