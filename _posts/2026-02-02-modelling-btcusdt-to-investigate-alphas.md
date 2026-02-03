@@ -91,11 +91,11 @@ The dataset was split into training and testing samples using a 80-20 split, wit
 | p-value | < 0.001 |
 | Durbin-Watson | 0.517 |
 
-The model explains a substantial extent of the forecasted $\widehat{\text{RV}}_{t+5}^{(5\text{min, ann})}$, as reflected in the R² value of 0.496. From the coefficients, it can be seen that the medium-horizon $\log(\text{RV}_{t}^{(60\text{min, ann})})$ dominates forecast dynamics with the largest coefficient of 0.5738. Nonetheless, the short and long-term horizons also contribute meaningfully. The coefficients are also highly statistically significant (all p-values < 0.001). 
+The model explains a substantial extent of the forecasted $\widehat{\mathrm{RV}}_{t+5}^{(5\text{min, ann})}$, as reflected in the $R^2$ value of 0.496. 
+
+From the coefficients, it can be seen that the medium-horizon $\log(\mathrm{RV}_{t}^{(60\text{min, ann})})$ dominates forecast dynamics with the largest coefficient of 0.5738. Nonetheless, the short- and long-horizon components also contribute meaningfully. All coefficients are highly statistically significant (all $p$-values $< 0.001$).
 
 Of note, the Durbin-Watson statistic (0.517) is < 2, indicating substantial residual autocorrelation that may not be well captured by the model, and may warrant further analysis and model extensions to refine the HAR model.
-
-Residuals exhibit extreme non-normality, reflecting jump risk and volatility clustering inherent in high-frequency crypto markets.
 
 ### Model Performance on Test Sample
 
