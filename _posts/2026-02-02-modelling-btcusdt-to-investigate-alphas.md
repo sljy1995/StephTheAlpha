@@ -68,27 +68,27 @@ The dataset was split into training and testing samples using a 80-20 split, wit
   </u></em></small>
 </p>
 
-| Variable | Coefficient | Std. Error | $t$-stat | $p$-value |
-|------|------:|------:|------:|------:|
-| Intercept | $-0.2196$ | $0.001$ | $-413.8$ | $< 0.001$ |
-| $\log(\mathrm{RV}_{t}^{(5\text{min, ann})})$ | $0.2169$ | $0.001$ | $396.9$ | $< 0.001$ |
-| $\log(\mathrm{RV}_{t}^{(60\text{min, ann})})$ | $0.5738$ | $0.001$ | $549.6$ | $< 0.001$ |
-| $\log(\mathrm{RV}_{t}^{(1\text{day, ann})})$ | $0.1974$ | $0.001$ | $180.5$ | $< 0.001$ |
+| Variable | Coefficient | Std. Error | t-stat | p-value |
+|---------|------------:|-----------:|-------:|--------:|
+| Intercept | -0.2196 | 0.001 | -413.8 | < 0.001 |
+| log(RV_t^(5min, ann)) | 0.2169 | 0.001 | 396.9 | < 0.001 |
+| log(RV_t^(60min, ann)) | 0.5738 | 0.001 | 549.6 | < 0.001 |
+| log(RV_t^(1day, ann)) | 0.1974 | 0.001 | 180.5 | < 0.001 |
 
 | Statistic | Value |
-|------|------:|
-| Skewness | $-7.386$ |
-| Kurtosis | $171.889$ |
-| Jarque–Bera | $4.23 \times 10^{9}$ |
-| $p$-value | $< 0.001$ |
+|----------|------:|
+| Skewness | -7.386 |
+| Kurtosis | 171.889 |
+| Jarque-Bera | 4.23e9 |
+| p-value | < 0.001 |
 
 | Metric | Value |
-|------|------:|
-| $R^2$ | $0.496$ |
-| Adjusted $R^2$ | $0.496$ |
-| $F$-statistic | $1.16 \times 10^{6}$ |
-| $p$-value | $< 0.001$ |
-| Durbin–Watson | $0.517$ |
+|-------|------:|
+| R^2 | 0.496 |
+| Adjusted R^2 | 0.496 |
+| F-statistic | 1.16e6 |
+| p-value | < 0.001 |
+| Durbin-Watson | 0.517 |
 
 The model explains a substantial extent of the forecasted $\widehat{\text{RV}}_{t+5}^{(5\text{min, ann})}$, as reflected in the R² value of 0.496. From the coefficients, it can be seen that the medium-horizon $\log(\text{RV}_{t}^{(60\text{min, ann})})$ dominates forecast dynamics with the largest coefficient of 0.5738. Nonetheless, the short and long-term horizons also contribute meaningfully. The coefficients are also highly statistically significant (all p-values < 0.001). 
 
