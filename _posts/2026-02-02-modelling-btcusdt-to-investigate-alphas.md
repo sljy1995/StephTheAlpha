@@ -23,24 +23,16 @@ From Binance, we obtained tick-level BTCUSDT spot trades from 17 Aug 2017 to 28 
   </u></em></small>
 </p>
 
-| Variable / Statistic | Coefficient | Std. Error | $t$-stat | $p$-value |
-| :--- | :---: | :---: | :---: | :---: |
-| **HAR Regression (Log)** | | | | |
-| Intercept | $-0.2196$ | $0.001$ | $-413.8$ | $< 0.001$ |
-| $\log(\text{RV}_{t}^{(5\text{min, ann})})$ | $0.2169$ | $0.001$ | $396.9$ | $< 0.001$ |
-| $\log(\text{RV}_{t}^{(60\text{min, ann})})$ | $0.5738$ | $0.001$ | $549.6$ | $< 0.001$ |
-| $\log(\text{RV}_{t}^{(1\text{day, ann})})$ | $0.1974$ | $0.001$ | $180.5$ | $< 0.001$ |
-| | | | | |
-| **Residual Diagnostics** | | | | |
-| Skewness | $-7.386$ | — | — | — |
-| Kurtosis | $171.889$ | — | — | — |
-| Jarque–Bera | $4.23 \times 10^{9}$ | — | — | $< 0.001$ |
-| | | | | |
-| **Model Fit Statistics** | | | | |
-| $R^2$ | $0.496$ | — | — | — |
-| Adjusted $R^2$ | $0.496$ | — | — | — |
-| $F$-statistic | $1.16 \times 10^{6}$ | — | — | $< 0.001$ |
-| Durbin–Watson | $0.517$ | — | — | — |
+| Statistic | log_return | rv_5m_ann | log_rv_5m_ann |
+|----------|-----------:|----------:|--------------:|
+| Count | 4.412544e+06 | 4.412540e+06 | 4.412540e+06 |
+| Mean | 6.894854e-07 | 5.411367e-01 | -1.007873e+00 |
+| Std Dev | 1.149050e-03 | 6.333458e-01 | 9.846214e-01 |
+| Min | -7.510582e-02 | 0.000000e+00 | -1.842068e+01 |
+| 25% | -3.344548e-04 | 2.191024e-01 | -1.518216e+00 |
+| Median | 0.000000e+00 | 3.714982e-01 | -9.902113e-01 |
+| 75% | 3.353473e-04 | 6.333433e-01 | -4.567426e-01 |
+| Max | 7.229275e-02 | 4.544996e+01 | 3.816612e+00 |
 
 <figure>
     <p align="center">
