@@ -34,7 +34,7 @@ From Binance, we obtained tick-level BTCUSDT spot trades from 17 Aug 2017 to 28 
 | 75% | 3.353473e-04 | 6.333433e-01 | -4.567426e-01 |
 | Max | 7.229275e-02 | 4.544996e+01 | 3.816612e+00 |
 
-    <p align="center">
+  <p align="center">
     <small><em>
       <u>Figure 1: Distribution Graphs of Log-returns, RV (5min, annualised), and Log RV (5min, annualised).</u>
    </em></small>
